@@ -3,12 +3,16 @@ import { connectDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 5000;
 
-connectDB
-  .then(() => {
+const startServer = async () => {
+  try {
+    await connectDB();
+
     app.listen(PORT, () => {
       console.log(`The server is running on ${PORT}`);
     });
-  })
-  .catch((error: any) => {
+  } catch (error) {
     console.error("Database Connection Failed ", error);
-  });
+  }
+};
+
+startServer();
