@@ -1,4 +1,5 @@
 CREATE DATABASE car_rental_system;
+
 USE car_rental_system;
 
 
@@ -47,11 +48,13 @@ CREATE TABLE bookings (
 );
 
 
+SELECT * FROM users;
+
+
 SHOW DATABASES;
 
 
 -- DESC users;-- 
 -- SHOW COLUMNS FROM cars;
 
--- DROP TABLE table_name;
 

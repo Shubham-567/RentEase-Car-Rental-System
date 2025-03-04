@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/auth.service.js";
 
-export const register = async (req: Request, res: Response) => {
-  const { name, email, password, phone, role } = req.body;
+export const register = async (req: Request, res: Response): Promise<void> => {
+  const { name, email, password, phone } = req.body;
 
   // validations
   if (!name || !email || !password || !phone) {
-    return res.status(400).json({
+    res.status(400).json({
       message: "Validation error",
       errors: [
         !name ? { field: "name", message: "Name is required" } : null,
@@ -17,6 +17,8 @@ export const register = async (req: Request, res: Response) => {
         !phone ? { field: "phone", message: "Phone number is required" } : null,
       ].filter(Boolean), // Removes null values
     });
+
+    return;
   }
 
   try {
@@ -27,14 +29,14 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Email and password are required" });
+      res.status(400).json({ message: "Email and password are required" });
+
+      return;
     }
 
     const token = await loginUser(email, password);
