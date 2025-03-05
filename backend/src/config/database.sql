@@ -47,24 +47,36 @@ CREATE TABLE bookings (
     car_id INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL CHECK (total_price >= 0),
     status ENUM('Pending', 'Confirmed', 'Cancelled', 'Completed') DEFAULT 'Pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT chk_dates CHECK (start_date < end_date),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE
+    FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE,
+    INDEX idx_user_id (user_id),
+    INDEX idx_car_id (car_id)
 );
+
 
 SELECT * FROM users;
 SELECT * FROM cars;
 SELECT * FROM car_images;
+SELECT * FROM bookings;
 
 
 SHOW DATABASES;
 
+DROP TABLE bookings;
+
+
+SELECT * FROM bookings;
 
 -- DESC users;-- 
 -- SHOW COLUMNS FROM cars;
 
 
 -- ALTER TABLE cars DROP COLUMN image_url;-- 
+
+
 
