@@ -8,14 +8,22 @@ import {
   removeBooking,
 } from "../controllers/booking.controller.js";
 
-import { authenticateUser } from "../middlewares/auth.middleware.js";
+import {
+  authenticateUser,
+  authorizeAdmin,
+} from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", authenticateUser, getBookings);
-router.get("/:id", authenticateUser, getBooking);
-router.post("/", authenticateUser, createNewBooking);
-router.put("/:id/status", authenticateUser, changeBookingStatus);
-router.delete("/:id", authenticateUser, removeBooking);
+router.get("/", authenticateUser, authorizeAdmin, getBookings);
+router.get("/:id", authenticateUser, authorizeAdmin, getBooking);
+router.post("/", authenticateUser, authorizeAdmin, createNewBooking);
+router.put(
+  "/:id/status",
+  authenticateUser,
+  authorizeAdmin,
+  changeBookingStatus
+);
+router.delete("/:id", authenticateUser, authorizeAdmin, removeBooking);
 
 export default router;

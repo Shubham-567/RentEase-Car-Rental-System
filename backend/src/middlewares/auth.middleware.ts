@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
+// middleware to check if user is logged in
 export const authenticateUser: RequestHandler = (
   req: Request,
   res: Response,
@@ -21,4 +22,20 @@ export const authenticateUser: RequestHandler = (
   } catch {
     res.status(403).json({ message: "Invalid token" });
   }
+};
+
+// middleware to check if user is admin
+export const authorizeAdmin: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = (req as any).user;
+
+  if (!user || user.role !== "admin") {
+    res.status(403).json({ message: "Forbidden: Admins only" });
+    return;
+  }
+
+  next();
 };
