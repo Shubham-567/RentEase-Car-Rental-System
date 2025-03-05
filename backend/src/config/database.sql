@@ -28,8 +28,15 @@ CREATE TABLE cars (
     transmission ENUM('Manual', 'Automatic') NOT NULL,
     seats INT NOT NULL,
     availability BOOLEAN DEFAULT TRUE,
-    image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Stores multiple images for each car
+CREATE TABLE car_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    car_id INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE
 );
 
 
@@ -47,8 +54,9 @@ CREATE TABLE bookings (
     FOREIGN KEY (car_id) REFERENCES cars(id) ON DELETE CASCADE
 );
 
-
 SELECT * FROM users;
+SELECT * FROM cars;
+SELECT * FROM car_images;
 
 
 SHOW DATABASES;
@@ -57,4 +65,6 @@ SHOW DATABASES;
 -- DESC users;-- 
 -- SHOW COLUMNS FROM cars;
 
+
+-- ALTER TABLE cars DROP COLUMN image_url;-- 
 

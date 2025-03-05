@@ -3,33 +3,49 @@ import { Car } from "../models/car.model.js";
 
 // fetch all available cars
 export const getAllCars = async (): Promise<Car[]> => {
-  const [rows]: any = await Pool.query(
+  const [cars]: any = await Pool.query(
     "SELECT * FROM cars WHERE availability = true"
   );
 
-  if (!rows.length) {
+  if (!cars.length) {
     throw new Error("No available cars found");
   }
 
-  return rows;
+  for (const car of cars) {
+    const [images]: any = await Pool.query(
+      "SELECT image_url FROM car_images WHERE car_id = ?",
+      [car.id]
+    );
+
+    car.images = images.map((img: any) => img.image_url);
+  }
+
+  return cars;
 };
 
 // fetch single car with id
 export const getCarById = async (id: number): Promise<Car> => {
-  const [rows]: any = await Pool.query("SELECT * FROM cars WHERE id = ?", [id]);
+  const [cars]: any = await Pool.query("SELECT * FROM cars WHERE id = ?", [id]);
 
-  if (!rows.length) {
+  if (!cars.length) {
     throw new Error("Car not found");
   }
 
-  return rows[0];
+  const car = cars[0];
+  const [images]: any = await Pool.query(
+    "SELECT image_url FROM car_images WHERE car_id = ?",
+    [id]
+  );
+  car.images = images.map((img: any) => img.image_url);
+
+  return car;
 };
 
 // add new car
-export const addCar = async (car: Car): Promise<number> => {
+export const addCar = async (car: Car): Promise<void> => {
   try {
     const [result]: any = await Pool.query(
-      "INSERT INTO cars (name, brand, model, year, type, price_per_day, fuel_type, transmission, seats, availability, image_url) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+      "INSERT INTO cars (name, brand, model, year, type, price_per_day, fuel_type, transmission, seats, availability) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         car.name,
         car.brand,
@@ -41,12 +57,21 @@ export const addCar = async (car: Car): Promise<number> => {
         car.transmission,
         car.seats,
         car.availability ?? true,
-        car.image_url ?? null,
       ]
     );
 
     // console.log(result);
-    return result.insertId; // id of newly inserted car
+    const carId = result.insertId; // id of newly inserted car
+
+    // inserting multiple images
+    if (car.images && car.images.length > 0) {
+      for (const imageUrl of car.images) {
+        await Pool.query(
+          "INSERT INTO car_images (car_id, image_url) VALUES (?, ?)",
+          [carId, imageUrl]
+        );
+      }
+    }
   } catch (error) {
     throw new Error("Failed to add car: " + (error as Error).message);
   }

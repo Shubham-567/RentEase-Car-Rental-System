@@ -10,6 +10,6 @@ export interface Car {
   transmission: "Manual" | "Automatic";
   seats: number;
   availability?: boolean;
-  image_url?: string;
+  images?: string[];
   created_at?: Date;
 }

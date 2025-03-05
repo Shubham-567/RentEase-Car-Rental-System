@@ -58,6 +58,7 @@ export const createCar = async (req: Request, res: Response): Promise<void> => {
     fuel_type,
     transmission,
     seats,
+    images,
   } = req.body;
 
   // validation
@@ -96,8 +97,21 @@ export const createCar = async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
+  const carData = {
+    name,
+    brand,
+    model,
+    year,
+    type,
+    price_per_day,
+    fuel_type,
+    transmission,
+    seats,
+    images: Array.isArray(images) ? images : [], // it should be array
+  };
+
   try {
-    await addCar(req.body);
+    await addCar(carData);
     res.status(201).json({ message: "Car added successfully" });
   } catch (error) {
     res
@@ -136,12 +150,10 @@ export const removeCar = async (req: Request, res: Response): Promise<void> => {
     if ((error as Error).message.includes("not found")) {
       res.status(404).json({ message: (error as Error).message });
     } else {
-      res
-        .status(500)
-        .json({
-          message: "Error deleting car",
-          error: (error as Error).message,
-        });
+      res.status(500).json({
+        message: "Error deleting car",
+        error: (error as Error).message,
+      });
     }
   }
 };
