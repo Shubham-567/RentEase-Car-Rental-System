@@ -15,6 +15,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+body {
+  background: #fffaf5;
+}
+
 @theme {
   --font-roboto: "Roboto", sans-serif;
 
@@ -45,7 +49,7 @@
   --color-background-950: #1a0d00;
 
   --color-primary: #fc8212;
-  --color-primary-50: #fff2e6;
+  --color-primary-50: #fdf4ef;
   --color-primary-100: #fee5cd;
   --color-primary-200: #feca9a;
   --color-primary-300: #fdb068;

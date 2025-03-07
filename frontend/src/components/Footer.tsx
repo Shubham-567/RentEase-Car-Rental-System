@@ -12,7 +12,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-secondary-100 text-text-950 py-8 px-6 md:px-16 shadow-lg mt-10'>
+    <footer className='bg-secondary-100 text-text-950 py-8 px-6 md:px-16 shadow-lg pt-10'>
       <div className='max-w-7xl mx-auto flex flex-wrap justify-between gap-10'>
         {/* Company Info & Newsletter */}
         <div className='max-w-md'>
@@ -92,7 +92,7 @@ const Footer = () => {
                   <a
                     key={index}
                     href='#'
-                    className='p-3 bg-background-200 rounded-full hover:bg-primary-500 hover:text-white transition-all duration-200 shadow-md'
+                    className='p-3 bg-accent-400 rounded-full hover:bg-accent-600 hover:text-white transition-all duration-200 shadow-md'
                     aria-label={Icon.name}>
                     <Icon size={20} />
                   </a>

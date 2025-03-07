@@ -8,9 +8,9 @@ import Footer from "../components/Footer";
 const AppRoutes = () => {
   return (
     <Router>
-      <div className='flex flex-col min-h-screen bg-background'>
+      <div className='flex flex-col min-h-screen'>
         <Navbar />
-        <main className='flex-grow px-5'>
+        <main className='flex-grow'>
           <Routes>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
