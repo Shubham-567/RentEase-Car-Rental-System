@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
-import DangerAlert from "../../components/DangerAlert";
+import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
