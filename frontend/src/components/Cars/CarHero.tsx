@@ -1,6 +1,11 @@
 import { Search } from "lucide-react";
 
-const CarHero = () => {
+interface CarHeroProps {
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
   return (
     <section className='relative text-text-900 text-center py-24 px-6'>
       <div className='max-w-3xl mx-auto'>
@@ -20,15 +25,23 @@ const CarHero = () => {
         </p>
 
         <div className='mt-8 flex justify-center'>
-          <div className='flex items-center bg-white/80 backdrop-blur-lg border border-gray-300 rounded-full shadow-lg w-full max-w-lg p-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500'>
+          <div className='flex items-center bg-background-100 backdrop-blur-lg border border-gray-300 rounded-full shadow-lg w-full max-w-lg p-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500'>
             <Search className='text-gray-500 mx-3' size={20} />
             <input
               type='text'
               placeholder='Search cars by name, brand...'
               aria-label='Search for rental cars'
-              className='flex-1 bg-transparent text-text-950 dark:text-text-50  placeholder-gray-500 focus:outline-none text-lg px-2'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className='flex-1 bg-transparent text-text-950  placeholder-gray-500 focus:outline-none text-lg px-2'
             />
-            <button className='bg-primary-500 text-white px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md'>
+            <button
+              className='bg-primary-500 text-text-50 px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md'
+              onClick={() => {
+                document
+                  .getElementById("car-listings")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}>
               Search
             </button>
           </div>

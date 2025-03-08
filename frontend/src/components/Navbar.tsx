@@ -42,10 +42,14 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <ul className='hidden md:flex space-x-6 text-lg'>
-          {["Home", "Cars", "About", "Contact"].map((item) => (
+          {["Home", "Browse Cars", "About", "Contact"].map((item) => (
             <li key={item}>
               <NavLink
-                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                to={
+                  item === "Home"
+                    ? "/"
+                    : `/${item.toLowerCase().replace(/\s+/g, "-")}`
+                }
                 className={({ isActive }) =>
                   isActive
                     ? "text-primary-500 font-bold dark:text-primary-400"
@@ -76,11 +80,11 @@ const Navbar = () => {
               {/* Dark Mode Toggle */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+                className='p-2 rounded-full hover:bg-accent-100'>
                 {darkMode ? (
                   <Sun size={20} className='text-accent-500' />
                 ) : (
-                  <Moon size={20} className='text-text-900' />
+                  <Moon size={20} className='text-accent-500' />
                 )}
               </button>
             </>
@@ -95,11 +99,11 @@ const Navbar = () => {
               {/* Dark Mode Toggle */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+                className='p-2 rounded-full hover:bg-accent-100'>
                 {darkMode ? (
                   <Sun size={20} className='text-accent-500' />
                 ) : (
-                  <Moon size={20} className='text-text-900' />
+                  <Moon size={20} className='text-accent-500' />
                 )}
               </button>
             </div>
@@ -117,11 +121,11 @@ const Navbar = () => {
           {/* Dark Mode Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+            className='p-2 rounded-full hover:bg-accent-100'>
             {darkMode ? (
               <Sun size={20} className='text-accent-500' />
             ) : (
-              <Moon size={20} className='text-text-900' />
+              <Moon size={20} className='text-accent-500' />
             )}
           </button>
         </div>
@@ -131,10 +135,14 @@ const Navbar = () => {
       {isOpen && (
         <div className='md:hidden bg-background-50 mt-2'>
           <ul className='flex flex-col space-y-4 p-4 text-lg'>
-            {["Home", "Cars", "About", "Contact"].map((item) => (
+            {["Home", "Browse Cars", "About", "Contact"].map((item) => (
               <li key={item}>
                 <NavLink
-                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  to={
+                    item === "Home"
+                      ? "/"
+                      : `/${item.toLowerCase().replace(/\s+/g, "-")}`
+                  }
                   className='block text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400'
                   onClick={() => setIsOpen(false)}>
                   {item}

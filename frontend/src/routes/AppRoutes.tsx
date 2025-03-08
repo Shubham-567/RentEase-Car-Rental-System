@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Home from "../pages/Home";
 import CarsBrowse from "../pages/CarsBrowse";
 import Footer from "../components/Footer";
+import CarDetails from "../pages/CarDetails";
 
 const AppRoutes = () => {
   return (
@@ -16,7 +17,8 @@ const AppRoutes = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/' element={<Home />} />
-            <Route path='/cars' element={<CarsBrowse />} />
+            <Route path='/browse-cars' element={<CarsBrowse />} />
+            <Route path='/cars/:id' element={<CarDetails />} />
           </Routes>
         </main>
         <Footer />

@@ -9,6 +9,8 @@ const CarsBrowse = () => {
   const { cars, loading, error, loadCars } = useCarStore();
   const [filteredCars, setFilteredCars] = useState(cars);
   const [visibleCount, setVisibleCount] = useState(8); // Show 8 initially
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [filters, setFilters] = useState({
     fuel_type: "",
     transmission: "",
@@ -26,11 +28,14 @@ const CarsBrowse = () => {
           (filters.fuel_type === "" || car.fuel_type === filters.fuel_type) &&
           (filters.transmission === "" ||
             car.transmission === filters.transmission) &&
-          (filters.type === "" || car.type === filters.type)
+          (filters.type === "" || car.type === filters.type) &&
+          (searchQuery === "" ||
+            car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            car.brand.toLowerCase().includes(searchQuery.toLowerCase()))
         );
       })
     );
-  }, [cars, filters]);
+  }, [cars, filters, searchQuery]);
 
   if (loading)
     return <p className='text-center text-gray-600'>Loading cars...</p>;
@@ -44,11 +49,11 @@ const CarsBrowse = () => {
 
   return (
     <div>
-      <CarHero />
+      <CarHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <Filters filters={filters} setFilters={setFilters} />
 
       {/* Car Listings */}
-      <section className='py-12 px-6'>
+      <section id='car-listings' className='py-12 px-6'>
         <div className='max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-4 sm:gap-8'>
           {filteredCars.length > 0 ? (
             filteredCars

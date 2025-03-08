@@ -10,3 +10,12 @@ export const fetchCars = async () => {
     throw new Error("Failed to fetch cars.");
   }
 };
+
+export const fetchCarById = async (carId: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${carId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch car details.");
+  }
+};

@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { fetchCars } from "../api/cars";
+import { fetchCars, fetchCarById } from "../api/cars";
 
-interface Car {
+export interface Car {
   id: number;
   name: string;
   brand: string;
@@ -18,13 +18,16 @@ interface Car {
 
 interface CarState {
   cars: Car[];
+  selectedCar: Car | null;
   loading: boolean;
   error: string | null;
   loadCars: () => Promise<void>;
+  loadCarById: (carId: number) => Promise<void>;
 }
 
 export const useCarStore = create<CarState>((set) => ({
   cars: [],
+  selectedCar: null,
   loading: false,
   error: null,
 
@@ -33,6 +36,17 @@ export const useCarStore = create<CarState>((set) => ({
     try {
       const cars = await fetchCars();
       set({ cars, loading: false });
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
+  loadCarById: async (carId: number) => {
+    set({ loading: true, error: null, selectedCar: null });
+
+    try {
+      const car = await fetchCarById(carId);
+      set({ selectedCar: car, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
