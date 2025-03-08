@@ -2,7 +2,7 @@ import { CheckCircle, Headset, Car, CalendarCheck } from "lucide-react";
 
 const WhyChooseUs = () => {
   return (
-    <section className='py-24 px-6 bg-background-50'>
+    <section className='py-24 px-6 bg-background-50 dark:bg-background-50'>
       <div className='text-center mb-16'>
         <h2 className='text-5xl font-extrabold text-text-950 tracking-wide'>
           Why Choose Us?

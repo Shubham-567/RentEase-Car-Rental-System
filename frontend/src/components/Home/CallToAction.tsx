@@ -14,7 +14,7 @@ const CallToAction = () => {
 
       <Link
         to='/cars'
-        className='mt-10 bg-secondary-500 text-text-900 px-12 py-4 rounded-full text-2xl font-bold flex items-center gap-4 shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:bg-secondary-400 hover:shadow-2xl relative z-10'
+        className='mt-10 bg-secondary-400 text-text-900 px-12 py-4 rounded-full text-2xl font-bold flex items-center gap-4 shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:bg-secondary-500 hover:shadow-2xl relative z-10'
         aria-label='Get Started'>
         Get Started <ArrowRight className='w-7 h-7' />
       </Link>

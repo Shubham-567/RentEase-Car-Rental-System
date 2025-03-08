@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
-import { Menu, X, Car, User } from "lucide-react"; // ✅ Lucide Icons
+import { Menu, X, Car, User, Sun, Moon } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, logout } = useAuthStore();
   const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   const handleLogout = () => {
     logout();
@@ -14,71 +27,43 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='bg-background shadow-md p-4'>
+    <nav className='bg-background-50 shadow-md p-4'>
       <div className='container mx-auto flex justify-between items-center'>
-        {/* Left side logo */}
+        {/* Logo */}
         <NavLink
           to='/'
-          className='flex items-center text-2xl font-bold text-primary-600'>
-          <Car size={28} className='mr-2 text-primary-600' />
+          className='flex items-center text-2xl font-bold text-primary-500 dark:text-primary-400'>
+          <Car
+            size={28}
+            className='mr-2 text-primary-500 dark:text-primary-400'
+          />
           RentEase
         </NavLink>
 
-        {/* Desktop menu */}
+        {/* Desktop Menu */}
         <ul className='hidden md:flex space-x-6 text-lg'>
-          <li>
-            <NavLink
-              to='/'
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary-600 font-bold"
-                  : "text-text-900 hover:text-primary-600"
-              }>
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/cars'
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary-600 font-bold"
-                  : "text-text-900 hover:text-primary-600"
-              }>
-              Cars
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/about'
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary-600 font-bold"
-                  : "text-text-900 hover:text-primary-600"
-              }>
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/contact'
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary-600 font-bold"
-                  : "text-text-900 hover:text-primary-600"
-              }>
-              Contact
-            </NavLink>
-          </li>
+          {["Home", "Cars", "About", "Contact"].map((item) => (
+            <li key={item}>
+              <NavLink
+                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-primary-500 font-bold dark:text-primary-400"
+                    : "text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400"
+                }>
+                {item}
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
-        {/* Right side auth links */}
+        {/* Right Side */}
         <div className='hidden md:flex items-center space-x-4'>
           {isAuthenticated ? (
             <>
               <NavLink
                 to='/profile'
-                className='text-text-900 hover:text-primary-600 flex items-center'>
+                className='text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400 flex items-center'>
                 <User size={20} className='mr-2' />
                 Profile
               </NavLink>
@@ -87,66 +72,81 @@ const Navbar = () => {
                 className='bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600'>
                 Logout
               </button>
+
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+                {darkMode ? (
+                  <Sun size={20} className='text-accent-500' />
+                ) : (
+                  <Moon size={20} className='text-text-900' />
+                )}
+              </button>
             </>
           ) : (
-            <NavLink
-              to='/login'
-              className='bg-primary-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-primary-600'>
-              Login / Register
-            </NavLink>
+            <div className='flex items-center gap-2'>
+              <NavLink
+                to='/register'
+                className='bg-primary-500 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-primary-600'>
+                Register
+              </NavLink>
+
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+                {darkMode ? (
+                  <Sun size={20} className='text-accent-500' />
+                ) : (
+                  <Moon size={20} className='text-text-900' />
+                )}
+              </button>
+            </div>
           )}
         </div>
 
-        {/* Mobile menu toggle */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className='md:hidden focus:outline-none'>
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className='flex items-center gap-2 md:hidden'>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className='md:hidden focus:outline-none text-text-900 dark:text-text-900'>
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className='p-2 rounded-full hover:bg-background-50 dark:hover:bg-background-950'>
+            {darkMode ? (
+              <Sun size={20} className='text-accent-500' />
+            ) : (
+              <Moon size={20} className='text-text-900' />
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {isOpen && (
-        <div className='md:hidden bg-background mt-2'>
+        <div className='md:hidden bg-background-50 mt-2'>
           <ul className='flex flex-col space-y-4 p-4 text-lg'>
-            <li>
-              <NavLink
-                to='/'
-                className='block text-text-900 hover:text-primary-600'
-                onClick={() => setIsOpen(false)}>
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/cars'
-                className='block text-text-900 hover:text-primary-600'
-                onClick={() => setIsOpen(false)}>
-                Cars
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/about'
-                className='block text-text-900 hover:text-primary-600'
-                onClick={() => setIsOpen(false)}>
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to='/contact'
-                className='block text-text-900 hover:text-primary-600'
-                onClick={() => setIsOpen(false)}>
-                Contact
-              </NavLink>
-            </li>
+            {["Home", "Cars", "About", "Contact"].map((item) => (
+              <li key={item}>
+                <NavLink
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  className='block text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400'
+                  onClick={() => setIsOpen(false)}>
+                  {item}
+                </NavLink>
+              </li>
+            ))}
             {isAuthenticated ? (
               <>
                 <li>
                   <NavLink
                     to='/profile'
-                    className='block text-text-900 hover:text-primary-600'
+                    className='block text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400'
                     onClick={() => setIsOpen(false)}>
                     Profile
                   </NavLink>
@@ -154,7 +154,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={handleLogout}
-                    className='bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 w-full'>
+                    className='bg-red-500 text-white px-3 py-2 rounded-lg shadow-md hover:bg-red-600 w-full'>
                     Logout
                   </button>
                 </li>
@@ -163,7 +163,7 @@ const Navbar = () => {
               <li>
                 <NavLink
                   to='/login'
-                  className='bg-primary-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-primary-600 block text-center'>
+                  className='bg-primary-500 text-text-900 px-4 py-2 rounded-lg shadow-md hover:bg-primary-600 block text-center'>
                   Login / Register
                 </NavLink>
               </li>

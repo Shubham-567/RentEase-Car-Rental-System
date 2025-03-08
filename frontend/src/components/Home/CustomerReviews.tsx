@@ -25,10 +25,10 @@ const CustomerReviews = () => {
   return (
     <section className='py-20 px-6 md:px-20 bg-background'>
       <div className='max-w-6xl mx-auto text-center'>
-        <h2 className='text-5xl font-bold text-text tracking-wide mb-4'>
+        <h2 className='text-5xl font-bold text-text-950 tracking-wide mb-4'>
           What Our Customers Say
         </h2>
-        <p className='text-text-700 text-lg mb-12'>
+        <p className='text-gray-500 text-lg mb-12'>
           Hear from our happy customers who have experienced our service.
         </p>
 

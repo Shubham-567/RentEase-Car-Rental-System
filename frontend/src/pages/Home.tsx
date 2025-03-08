@@ -1,10 +1,10 @@
-import CallToAction from "../components/CallToAction";
-import CustomerReviews from "../components/CustomerReviews";
-import FAQSection from "../components/FAQSection";
-import FeaturedCars from "../components/FeaturedCars";
-import HeroSection from "../components/HeroSection";
-import HowItWorks from "../components/HowItWorks";
-import WhyChooseUs from "../components/WhyChooseUs";
+import CallToAction from "../components/Home/CallToAction";
+import CustomerReviews from "../components/Home/CustomerReviews";
+import FAQSection from "../components/Home/FAQSection";
+import FeaturedCars from "../components/Home/FeaturedCars";
+import HeroSection from "../components/Home/HeroSection";
+import HowItWorks from "../components/Home/HowItWorks";
+import WhyChooseUs from "../components/Home/WhyChooseUs";
 
 const Home = () => {
   return (

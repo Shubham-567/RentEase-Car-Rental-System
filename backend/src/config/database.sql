@@ -67,7 +67,10 @@ SELECT * FROM bookings;
 
 SHOW DATABASES;
 
+DROP TABLE cars;
+DROP TABLE car_images;
 DROP TABLE bookings;
+
 
 
 SELECT * FROM bookings;

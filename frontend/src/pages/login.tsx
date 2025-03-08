@@ -55,7 +55,7 @@ const Login = () => {
             placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
             required
             aria-required='true'
           />
@@ -73,15 +73,22 @@ const Login = () => {
             placeholder='Enter your password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
             required
           />
           <button
             type='button'
             onClick={() => setShowPassword(!showPassword)}
-            className='absolute flex items-center bottom-3 right-3 text-text-800 text-lg font-medium'>
+            className='absolute flex items-center bottom-3 right-3 text-primary-500 text-lg font-medium'>
             {showPassword ? <EyeOff size={25} /> : <Eye size={25} />}{" "}
           </button>
+        </div>
+
+        <div className='flex items-center gap-2 mb-4'>
+          <input type='checkbox' id='remember' className='w-4 h-4' />
+          <label htmlFor='remember' className='text-text-800 text-sm'>
+            Remember me
+          </label>
         </div>
 
         <button

@@ -68,7 +68,7 @@ const Register = () => {
             placeholder='Enter your name'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
             required
           />
         </div>
@@ -85,7 +85,7 @@ const Register = () => {
             placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
             required
           />
         </div>
@@ -102,13 +102,13 @@ const Register = () => {
             placeholder='Enter your password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
             required
           />
           <button
             type='button'
             onClick={() => setShowPassword(!showPassword)}
-            className='absolute flex items-center bottom-3 right-3 text-text-800 text-lg font-medium'>
+            className='absolute flex items-center bottom-3 right-3 text-primary-500 text-lg font-medium'>
             {showPassword ? <EyeOff size={25} /> : <Eye size={25} />}{" "}
           </button>
         </div>
@@ -125,7 +125,7 @@ const Register = () => {
             placeholder='Enter your phone number'
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className='bg-background p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
+            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
             required
           />
         </div>

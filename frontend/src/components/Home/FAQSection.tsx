@@ -37,10 +37,10 @@ const FAQSection = () => {
       <div className='max-w-6xl mx-auto grid md:grid-cols-3 gap-12 items-start'>
         {/* Left Side Content */}
         <div className='md:col-span-1 self-start'>
-          <h2 className='text-4xl sm:text-5xl font-extrabold text-text tracking-wide mb-6'>
+          <h2 className='text-4xl sm:text-5xl font-extrabold text-text-950 tracking-wide mb-6'>
             FAQs
           </h2>
-          <p className='text-text-900 text-lg leading-relaxed'>
+          <p className='text-gray-500 text-lg leading-relaxed'>
             Find answers to the most common questions regarding our service.
           </p>
         </div>
@@ -50,7 +50,7 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className='p-6 rounded-xl border transition-all duration-300 cursor-pointer bg-secondary-100 border-accent-500 shadow-lg hover:shadow-md'
+              className='p-6 rounded-xl border transition-all duration-300 cursor-pointer bg-secondary-50 border-accent-500 shadow-lg hover:shadow-md'
               onClick={() => toggleFAQ(index)}>
               <div className='flex justify-between items-center'>
                 <h3 className='text-lg sm:text-xl font-semibold text-text'>

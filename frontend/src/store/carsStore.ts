@@ -8,7 +8,7 @@ interface Car {
   model: string;
   year: number;
   type: string;
-  price_per_day: string;
+  price_per_day: number;
   fuel_type: string;
   transmission: string;
   seats: number;

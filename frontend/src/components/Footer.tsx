@@ -12,7 +12,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-secondary-100 text-text-950 py-8 px-6 md:px-16 shadow-lg pt-10'>
+    <footer className='bg-secondary-100 dark:bg-background-50 text-text-950 py-8 px-6 md:px-16 shadow-lg pt-10'>
       <div className='max-w-7xl mx-auto flex flex-wrap justify-between gap-10'>
         {/* Company Info & Newsletter */}
         <div className='max-w-md'>
@@ -68,18 +68,14 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className='flex justify-center flex-col gap-10 md:gap-5 md:flex-row lg:flex-col'>
+          <div className='flex justify-center flex-col gap-10 md:gap-5 md:flex-col xl:flex-row'>
             {/* Contact Info */}
             <div>
               <h3 className='text-xl font-semibold text-primary-700'>
                 Contact Us
               </h3>
-              <p className='mt-4 text-base text-text-800'>
-                Phone: +1 (123) 456-7890
-              </p>
-              <p className='text-base text-text-800'>
-                Email: support@rentEase.com
-              </p>
+              <p className='mt-4 text-base text-text-800'>+91 12345 67890</p>
+              <p className='text-base text-text-800'>support@rentEase.com</p>
             </div>
 
             {/* Social Media */}
