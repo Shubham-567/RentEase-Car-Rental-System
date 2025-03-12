@@ -6,6 +6,7 @@ import Home from "../pages/Home";
 import CarsBrowse from "../pages/CarsBrowse";
 import Footer from "../components/Footer";
 import CarDetails from "../pages/CarDetails";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
             <Route path='/' element={<Home />} />
             <Route path='/browse-cars' element={<CarsBrowse />} />
             <Route path='/cars/:id' element={<CarDetails />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

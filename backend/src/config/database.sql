@@ -59,6 +59,7 @@ CREATE TABLE bookings (
 );
 
 
+USE car_rental_system;
 SELECT * FROM users;
 SELECT * FROM cars;
 SELECT * FROM car_images;

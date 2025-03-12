@@ -17,6 +17,8 @@ export const authenticateUser: RequestHandler = (
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
+    // console.log(decoded);
+
     (req as any).user = decoded;
     next();
   } catch {

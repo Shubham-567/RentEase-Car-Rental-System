@@ -13,9 +13,11 @@ const HeroSection = () => {
           Choose from our wide selection of luxury, SUVs, and budget-friendly
           cars. Experience top-notch service and unbeatable prices!
         </p>
+
+        {/* call to action buttons */}
         <div className='flex flex-wrap justify-center lg:justify-start gap-5'>
           <Link
-            to='/cars'
+            to='/browse-cars'
             className='bg-primary-500 text-text-50 dark:text-text-950 px-7 py-3 rounded-lg text-lg font-semibold shadow-2xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-primary-400 hover:bg-primary-600'
             aria-label='Explore Cars'>
             Explore Cars
@@ -32,7 +34,7 @@ const HeroSection = () => {
       {/* Hero Image Section */}
       <div className='w-full lg:w-1/2 flex justify-center relative mt-16 lg:mt-0'>
         {/* Image Background */}
-        <div className='absolute top-[-30px] w-[85%] h-[320px] md:h-[380px] rounded-full opacity-30 scale-110 bg-primary-500 blur-3xl'></div>
+        <div className='absolute top-[-30px] w-[85%] h-[320px] md:h-[380px] rounded-full scale-110 bg-secondary-500/30  dark:bg-primary-500/20 blur-3xl'></div>
 
         {/* Hero Image */}
         <img
