@@ -7,6 +7,7 @@ import CarsBrowse from "../pages/CarsBrowse";
 import Footer from "../components/Footer";
 import CarDetails from "../pages/CarDetails";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +21,9 @@ const AppRoutes = () => {
             <Route path='/' element={<Home />} />
             <Route path='/browse-cars' element={<CarsBrowse />} />
             <Route path='/cars/:id' element={<CarDetails />} />
+            <Route path='/profile' element={<Profile />} />
+
+            {/* 404 */}
             <Route path='*' element={<NotFound />} />
           </Routes>
         </main>

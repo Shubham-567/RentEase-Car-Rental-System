@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.get("/", authenticateUser, authorizeAdmin, getBookings);
 router.get("/:id", authenticateUser, authorizeAdmin, getBooking);
-router.post("/", authenticateUser, authorizeAdmin, createNewBooking);
+router.post("/", authenticateUser, createNewBooking);
 router.put(
   "/:id/status",
   authenticateUser,

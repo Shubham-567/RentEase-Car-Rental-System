@@ -24,7 +24,7 @@ const Login = () => {
       setLoading(false);
 
       if (message === "Login successful") {
-        navigate("/profile");
+        navigate("/"); // home page
       } else {
         setError(message || "Something went wrong. Try again.");
       }
