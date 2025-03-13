@@ -1,21 +1,36 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CarImageCarousel from "./CarImageCarousel";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Fuel, Settings, Users, CalendarDays } from "lucide-react";
+import BookingModal from "../Bookings/BookingModal";
 
-// Import the Car type
 import { Car } from "../../store/carsStore";
+import { useUserStore } from "../../store/userStore";
 
-// Define props with the correct Car type
+// props with the correct Car type
 interface CarDetailsCardProps {
   car: Car;
 }
 
 const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
-  // Fix TypeScript state issue by explicitly defining type
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const user = useUserStore((state) => state.user);
+  const userId = user?.id ?? 0;
+  const userName = user?.name ?? "Guest";
+
+  const handleRentNowClick = () => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      setIsModalOpen(true);
+    }
+  };
 
   return (
     <div className='p-8 bg-background-50 rounded-2xl relative overflow-hidden'>
@@ -114,11 +129,25 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
                 ? "bg-primary-500 text-white hover:bg-primary-600 hover:scale-102 active:scale-99"
                 : "bg-gray-400 text-gray-200 cursor-not-allowed"
             }`}
-            disabled={car.availability === 0}>
+            disabled={car.availability === 0}
+            onClick={handleRentNowClick}>
             {car.availability > 0 ? "Rent Now" : "Out of Stock"}
           </button>
         </div>
       </div>
+
+      {/* Booking modal */}
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        carId={car.id}
+        userId={userId}
+        carName={`${car.brand} ${car.model}`}
+        userName={userName}
+        startDate={startDate}
+        endDate={endDate}
+        pricePerDay={car.price_per_day}
+      />
     </div>
   );
 };

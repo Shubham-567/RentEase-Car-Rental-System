@@ -24,6 +24,6 @@ router.put(
   authorizeAdmin,
   changeBookingStatus
 );
-router.delete("/:id", authenticateUser, authorizeAdmin, removeBooking);
+router.delete("/:id", authenticateUser, removeBooking);
 
 export default router;

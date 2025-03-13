@@ -4,18 +4,12 @@ import { useUserStore } from "../store/userStore";
 import { useAuthStore } from "../store/authStore";
 
 import { User, Mail, Phone, Lock, Pencil, Save, X, LogOut } from "lucide-react";
+import MyBookings from "../components/Bookings/MyBookings";
 
 const Profile = () => {
   const navigate = useNavigate();
 
-  const {
-    user,
-    bookings,
-    loadUserProfile,
-    updateUser,
-    changePassword,
-    loadBookings,
-  } = useUserStore();
+  const { user, loadUserProfile, updateUser, changePassword } = useUserStore();
   const { token, logout } = useAuthStore();
 
   const [editMode, setEditMode] = useState(false);
@@ -33,9 +27,8 @@ const Profile = () => {
   useEffect(() => {
     if (token) {
       loadUserProfile(token);
-      loadBookings(token);
     }
-  }, [token, loadUserProfile, loadBookings]);
+  }, [token, loadUserProfile]);
 
   useEffect(() => {
     if (user) {
@@ -51,10 +44,25 @@ const Profile = () => {
   };
 
   const handleChangePassword = async () => {
-    await changePassword(token!, { oldPassword, newPassword });
-    alert("Password changed!");
-    setOldPassword("");
-    setNewPassword("");
+    if (!oldPassword || !newPassword) {
+      alert("Both Old Password and New Password are required.");
+      return;
+    }
+
+    if (oldPassword === newPassword) {
+      alert("New password must be different from the old password.");
+      return;
+    }
+
+    try {
+      await changePassword(token!, { oldPassword, newPassword });
+      alert("Password changed successfully!");
+
+      setOldPassword("");
+      setNewPassword("");
+    } catch (error) {
+      alert("Failed to change password. Please try again.");
+    }
   };
 
   return (
@@ -67,8 +75,7 @@ const Profile = () => {
         {/* Left: Profile Info */}
         <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200'>
           <h3 className='text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
-            <User size={26} className='text-accent-600' /> Edit Personal
-            Information
+            <User size={26} className='text-accent-600' /> Personal Information
           </h3>
 
           {editMode ? (
@@ -141,7 +148,7 @@ const Profile = () => {
         {/* Right: Change Password */}
         <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200'>
           <h3 className='text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
-            <Lock size={24} className='text-accent-600' /> Change Password
+            <Lock size={22} className='text-accent-600' /> Change Password
           </h3>
 
           <div className='space-y-5'>
@@ -184,28 +191,8 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* My Bookings Section ToDo: update this */}
-      <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200 mt-6'>
-        <h3 className='text-xl font-semibold text-text-900'>My Bookings</h3>
-
-        <div className='mt-4'>
-          {bookings.length > 0 ? (
-            <ul className='space-y-3'>
-              {bookings.map((booking) => (
-                <li
-                  key={booking.id}
-                  className='p-3 border border-primary-400 rounded-md text-text-950 bg-background-50 shadow-sm'>
-                  {booking.car_name} -{" "}
-                  {new Date(booking.start_date).toLocaleDateString("en-GB")} to{" "}
-                  {new Date(booking.end_date).toLocaleDateString("en-GB")}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className='text-text-500'>No bookings found.</p>
-          )}
-        </div>
-      </div>
+      {/* My Bookings Section */}
+      <MyBookings />
 
       {/* Logout Button */}
       <button

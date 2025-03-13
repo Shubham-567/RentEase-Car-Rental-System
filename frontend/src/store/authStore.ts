@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { loginUser, registerUser } from "../api/auth";
+import { useUserStore } from "./userStore";
 
 interface AuthState {
   token: string | null;
@@ -25,6 +26,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (data.token) {
         localStorage.setItem("token", data.token);
         set({ token: data.token, isAuthenticated: true });
+
+        await useUserStore.getState().loadUserProfile(data.token);
+
         return "Login successful";
       }
     } catch (error: any) {
@@ -35,6 +39,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: () => {
     localStorage.removeItem("token");
     set({ token: null, isAuthenticated: false });
+    useUserStore.setState({ user: null, bookings: [] });
   },
 
   register: async (name, email, password, phone) => {

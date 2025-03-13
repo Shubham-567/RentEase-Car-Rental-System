@@ -53,10 +53,19 @@ export const changeUserPassword = async (
 // get user booking history
 export const getUserBookings = async (userId: number) => {
   const [rows]: any = await Pool.query(
-    `SELECT b.id, c.name AS car_name, c.brand, b.start_date, b.end_date, b.total_price, b.status
-     FROM bookings b
-     JOIN cars c ON b.car_id = c.id
-     WHERE b.user_id = ? ORDER BY b.start_date DESC`,
+    `SELECT 
+      b.id, 
+      c.name AS car_name, 
+      c.brand, 
+      b.start_date, 
+      b.end_date, 
+      b.total_price, 
+      b.status, 
+      (SELECT image_url FROM car_images WHERE car_id = c.id LIMIT 1) AS car_image
+    FROM bookings b
+    JOIN cars c ON b.car_id = c.id
+    WHERE b.user_id = ? 
+    ORDER BY b.start_date DESC`,
     [userId]
   );
 

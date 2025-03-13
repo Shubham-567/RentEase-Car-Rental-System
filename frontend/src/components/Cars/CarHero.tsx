@@ -25,7 +25,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
         </p>
 
         <div className='mt-8 flex justify-center'>
-          <div className='flex items-center bg-background-100 backdrop-blur-lg border border-gray-300 rounded-full shadow-lg w-full max-w-lg p-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500'>
+          <div className='flex items-center bg-white/80 dark:bg-background-100 backdrop-blur-lg border border-gray-300 rounded-full shadow-lg w-full max-w-lg p-2 transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500'>
             <Search className='text-gray-500 mx-3' size={20} />
             <input
               type='text'

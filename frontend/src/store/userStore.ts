@@ -15,16 +15,19 @@ interface User {
   role: string;
 }
 
-interface Bookings {
+interface Booking {
   id: number;
   car_name: string;
+  car_image: string;
   start_date: string;
   end_date: string;
+  total_price: number;
+  status: string;
 }
 
 interface UserState {
   user: User | null;
-  bookings: Bookings[];
+  bookings: Booking[];
   loading: boolean;
   error: string | null;
   loadUserProfile: (token: string) => Promise<void>;

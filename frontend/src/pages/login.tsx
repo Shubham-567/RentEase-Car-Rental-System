@@ -55,7 +55,7 @@ const Login = () => {
             placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
+            className='bg-white/80 dark:bg-background-100 text-primary-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400'
             required
             aria-required='true'
           />
@@ -73,7 +73,7 @@ const Login = () => {
             placeholder='Enter your password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='bg-background dark:bg-background-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
+            className='bg-white/80 dark:bg-background-100 text-primary-950 p-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 pr-10'
             required
           />
           <button
