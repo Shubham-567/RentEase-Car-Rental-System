@@ -3,7 +3,19 @@ import { Booking } from "../models/booking.model.js";
 
 // fetch all bookings
 export const getAllBookings = async (): Promise<Booking[]> => {
-  const [bookings]: any = await Pool.query("SELECT * FROM bookings");
+  const [bookings]: any = await Pool.query(`SELECT 
+    bookings.id,
+    users.name AS user_name,
+    cars.name AS car_name,
+    bookings.start_date,
+    bookings.end_date,
+    bookings.total_price,
+    bookings.status
+    FROM bookings
+    JOIN users ON bookings.user_id = users.id
+    JOIN cars ON bookings.car_id = cars.id
+    ORDER BY bookings.created_at DESC;
+  `);
 
   if (!bookings.length) {
     throw new Error("No bookings found");

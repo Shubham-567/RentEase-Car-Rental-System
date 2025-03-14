@@ -1,34 +1,41 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "../pages/login";
 import Register from "../pages/Register";
-import Navbar from "../components/Navbar";
 import Home from "../pages/Home";
 import CarsBrowse from "../pages/CarsBrowse";
-import Footer from "../components/Footer";
 import CarDetails from "../pages/CarDetails";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
+import UserLayout from "../components/UserLayout";
+import AdminLayout from "../components/Admin/AdminLayout";
+import AdminRoute from "./AdminRoutes";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 const AppRoutes = () => {
   return (
     <Router>
-      <div className='flex flex-col min-h-screen'>
-        <Navbar />
-        <main className='flex-grow'>
-          <Routes>
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/' element={<Home />} />
-            <Route path='/browse-cars' element={<CarsBrowse />} />
-            <Route path='/cars/:id' element={<CarDetails />} />
-            <Route path='/profile' element={<Profile />} />
+      <Routes>
+        {/* User Layout */}
+        <Route element={<UserLayout />}>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
 
-            {/* 404 */}
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+          <Route path='/' element={<Home />} />
+          <Route path='/browse-cars' element={<CarsBrowse />} />
+          <Route path='/cars/:id' element={<CarDetails />} />
+          <Route path='/profile' element={<Profile />} />
+        </Route>
+
+        {/* Admin Routes (Protected) */}
+        <Route element={<AdminRoute />}>
+          <Route element={<AdminLayout />}>
+            <Route path='/admin' element={<AdminDashboard />} />
+          </Route>
+        </Route>
+
+        {/* 404 pages */}
+        <Route path='*' element={<NotFound />} />
+      </Routes>
     </Router>
   );
 };

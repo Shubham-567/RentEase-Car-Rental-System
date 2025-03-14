@@ -2,6 +2,32 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL + "/bookings";
 
+// fetch all bookings
+export const fetchAllBookings = async (token: string) => {
+  try {
+    const response = await axios.get(API_URL, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch all bookings");
+  }
+};
+
+// fetch booking by id
+export const fetchBookingById = async (token: string, bookingId: number) => {
+  try {
+    const response = await axios.get(`${API_URL}/${bookingId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch booking.");
+  }
+};
+
 // create a new car booking
 export const createBooking = async (
   token: string,
@@ -21,19 +47,6 @@ export const createBooking = async (
     return response.data;
   } catch (error) {
     throw new Error("Failed to create booking.");
-  }
-};
-
-// fetch booking by id
-export const fetchBookingById = async (token: string, bookingId: number) => {
-  try {
-    const response = await axios.get(`${API_URL}/${bookingId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch booking.");
   }
 };
 

@@ -5,12 +5,15 @@ import {
   fetchBookingById,
   updateBookingStatus,
   deleteBooking,
+  fetchAllBookings,
 } from "../api/booking";
 
 interface Booking {
   id: number;
   user_id: number;
   car_id: number;
+  user_name: string;
+  car_name: string;
   start_date: string;
   end_date: string;
   total_price: number;
@@ -26,6 +29,7 @@ interface BookingState {
     token: string,
     bookingData: Omit<Booking, "id" | "status">
   ) => Promise<void>;
+  loadBookings: (token: string) => Promise<void>;
   loadBookingById: (token: string, bookingId: number) => Promise<void>;
   changeBookingStatus: (
     token: string,
@@ -46,6 +50,16 @@ export const useBookingStore = create<BookingState>((set) => ({
     try {
       await createBooking(token, bookingData);
       set({ loading: false });
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+    }
+  },
+
+  loadBookings: async (token) => {
+    set({ loading: true, error: null });
+    try {
+      const allBookings = await fetchAllBookings(token);
+      set({ bookings: allBookings, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }

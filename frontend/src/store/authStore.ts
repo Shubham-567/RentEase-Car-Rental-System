@@ -15,44 +15,52 @@ interface AuthState {
   ) => Promise<string | void>;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  token: localStorage.getItem("token") || null,
-  isAuthenticated: !!localStorage.getItem("token"),
+export const useAuthStore = create<AuthState>((set) => {
+  const token = localStorage.getItem("token");
 
-  login: async (email, password) => {
-    try {
-      const data = await loginUser({ email, password });
+  if (token) {
+    useUserStore.getState().loadUserProfile(token);
+  }
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        set({ token: data.token, isAuthenticated: true });
+  return {
+    token,
+    isAuthenticated: !!token,
 
-        await useUserStore.getState().loadUserProfile(data.token);
+    login: async (email, password) => {
+      try {
+        const data = await loginUser({ email, password });
 
-        return "Login successful";
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          set({ token: data.token, isAuthenticated: true });
+
+          await useUserStore.getState().loadUserProfile(data.token); // ✅ Ensure user is loaded
+
+          return "Login successful";
+        }
+      } catch (error: any) {
+        return error?.response?.data?.message || "Login failed. Try again.";
       }
-    } catch (error: any) {
-      return error?.response?.data?.message || "Login failed. Try again.";
-    }
-  },
+    },
 
-  logout: () => {
-    localStorage.removeItem("token");
-    set({ token: null, isAuthenticated: false });
-    useUserStore.setState({ user: null, bookings: [] });
-  },
+    logout: () => {
+      localStorage.removeItem("token");
+      set({ token: null, isAuthenticated: false });
+      useUserStore.setState({ user: null, bookings: [] });
+    },
 
-  register: async (name, email, password, phone) => {
-    try {
-      const response = await registerUser({ name, email, password, phone });
+    register: async (name, email, password, phone) => {
+      try {
+        const response = await registerUser({ name, email, password, phone });
 
-      if (response.message === "User registered successfully") {
-        return "Registration successful. You can now log in.";
+        if (response.message === "User registered successfully") {
+          return "Registration successful. You can now log in.";
+        }
+      } catch (error: any) {
+        return (
+          error?.response?.data?.message || "Registration failed. Try again."
+        );
       }
-    } catch (error: any) {
-      return (
-        error?.response?.data?.message || "Registration failed. Try again."
-      );
-    }
-  },
-}));
+    },
+  };
+});
