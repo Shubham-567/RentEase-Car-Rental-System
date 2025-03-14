@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { useUserStore } from "../../store/userStore";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, ShieldUser } from "lucide-react";
 
 const AdminNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,9 +36,9 @@ const AdminNavbar = () => {
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
         <NavLink
-          to='/admin/dashboard'
-          className='flex items-center text-2xl font-bold text-primary-500 dark:text-primary-400'>
-          Admin Panel
+          to='/admin'
+          className='flex items-center gap-2 text-2xl font-bold text-primary-500 dark:text-primary-400'>
+          <ShieldUser size={25} /> RentEase Admin
         </NavLink>
 
         {/* Desktop Menu */}
@@ -47,6 +47,7 @@ const AdminNavbar = () => {
             {
               name: "Dashboard",
               path: "/admin",
+              end: true,
             },
             {
               name: "Manage Cars",
@@ -60,13 +61,14 @@ const AdminNavbar = () => {
               name: "Manage Bookings",
               path: "/admin/manage-bookings",
             },
-          ].map(({ name, path }) => (
+          ].map(({ name, path, end }) => (
             <li key={name}>
               <NavLink
                 to={path}
+                end={end}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-primary-500 font-bold dark:text-primary-400 flex items-center gap-2"
+                    ? "text-primary-500 dark:text-primary-400 flex items-center gap-2 font-bold"
                     : "text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400 flex items-center gap-2"
                 }>
                 {name}
@@ -123,7 +125,8 @@ const AdminNavbar = () => {
             {[
               {
                 name: "Dashboard",
-                path: "/admin/dashboard",
+                path: "/admin",
+                end: true,
               },
               {
                 name: "Manage Cars",
@@ -137,11 +140,16 @@ const AdminNavbar = () => {
                 name: "Manage Bookings",
                 path: "/admin/manage-bookings",
               },
-            ].map(({ name, path }) => (
+            ].map(({ name, path, end }) => (
               <li key={name}>
                 <NavLink
                   to={path}
-                  className='text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400 flex items-center gap-2'
+                  end={end}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary-500 dark:text-primary-400 flex items-center gap-2 font-bold"
+                      : "text-text-900 hover:text-primary-500 dark:text-text-900 dark:hover:text-primary-400 flex items-center gap-2"
+                  }
                   onClick={() => setIsOpen(false)}>
                   {name}
                 </NavLink>

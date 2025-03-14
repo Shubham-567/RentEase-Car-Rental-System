@@ -31,10 +31,9 @@ const AdminDashboard = () => {
     return <p className='text-center text-lg text-gray-600'>Loading...</p>;
 
   // Calculate statistics
-  const totalRevenue = bookings.reduce(
-    (sum, b) => sum + Number(b.total_price),
-    0
-  );
+  const totalRevenue = bookings
+    .filter((b) => b.status === "Confirmed")
+    .reduce((sum, b) => sum + Number(b.total_price), 0);
   const confirmedBookings = bookings.filter(
     (b) => b.status === "Confirmed"
   ).length;
@@ -45,7 +44,6 @@ const AdminDashboard = () => {
 
   return (
     <div className='p-8 bg-background-50 min-h-screen'>
-      {/* Header */}
       <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
         Admin Dashboard
       </h2>
@@ -116,14 +114,15 @@ const AdminDashboard = () => {
         <h3 className='text-lg font-semibold text-gray-700 flex items-center gap-2'>
           <CalendarDays size={20} className='text-accent-500' /> Recent Bookings
         </h3>
-        <div className='overflow-x-auto mt-3'>
-          <table className='w-full border-collapse text-gray-700'>
+        <div className='overflow-x-auto mt-3 rounded-xl shadow-md'>
+          <table className='w-full border-collapse text-gray-700 rounded-lg overflow-hidden shadow-md'>
             <thead>
               <tr className='bg-primary-500 text-white'>
                 <th className='p-3 text-left'>User Name</th>
                 <th className='p-3 text-left'>Car Name</th>
                 <th className='p-3 text-left'>Start Date</th>
                 <th className='p-3 text-left'>End Date</th>
+                <th className='p-3 text-left'>Total Price</th>
                 <th className='p-3 text-left'>Status</th>
               </tr>
             </thead>
@@ -131,7 +130,7 @@ const AdminDashboard = () => {
               {bookings.slice(0, 5).map((booking, index) => (
                 <tr
                   key={booking.id}
-                  className={`border-t ${
+                  className={`border-t border-primary-500 ${
                     index % 2 === 0 ? "bg-background-50" : "bg-secondary-50"
                   } hover:bg-background-100 transition-all`}>
                   <td className='p-3'>{booking.user_name}</td>
@@ -141,6 +140,9 @@ const AdminDashboard = () => {
                   </td>
                   <td className='p-3'>
                     {new Date(booking.end_date).toLocaleDateString("en-GB")}
+                  </td>
+                  <td className='p-3 font-semibold text-gray-800'>
+                    ₹{Number(booking.total_price).toLocaleString()}
                   </td>
                   <td className='p-3'>
                     <span
