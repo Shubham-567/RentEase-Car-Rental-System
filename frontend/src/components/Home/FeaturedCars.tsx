@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useCarStore } from "../../store/carsStore";
 import { useEffect } from "react";
-import DangerAlert from "../DangerAlert";
 
 const FeaturedCars = () => {
   const { cars, loading, error, loadCars } = useCarStore();
@@ -11,14 +10,20 @@ const FeaturedCars = () => {
   }, []);
 
   if (loading)
-    return <p className='text-center text-gray-600'>Loading cars...</p>;
+    return (
+      <p className='text-center text-gray-600 my-10 text-xl'>Loading cars...</p>
+    );
 
-  if (error)
+  if (error) {
     return (
       <div className='w-1/3 mx-auto'>
-        <DangerAlert message={error} />{" "}
+        <div className='text-center text-red-500 my-10 text-xl'>
+          <span className='font-bold'>Error: </span>
+          {error}
+        </div>
       </div>
     );
+  }
 
   return (
     <section className='py-24 px-6'>

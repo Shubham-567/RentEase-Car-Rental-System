@@ -5,10 +5,26 @@ import { useAuthStore } from "../../store/authStore";
 import { useEffect } from "react";
 
 const MyBookings = () => {
-  const { bookings, loadBookings } = useUserStore(); // user booking history
-  //   console.log("Bookings: ", bookings);
-  const { removeBooking } = useBookingStore();
+  const { bookings, loadBookings } = useUserStore();
+  const { changeBookingStatus } = useBookingStore();
   const { token } = useAuthStore();
+
+  const handleBookingCancel = async (bookingId: number, newStatus: string) => {
+    if (window.confirm("Are you sure you want to update the booking status?")) {
+      try {
+        const response = await changeBookingStatus(
+          token!,
+          bookingId,
+          newStatus
+        );
+        console.log("Change booking response:", response);
+
+        await loadBookings(token!);
+      } catch (error) {
+        console.error("Error changing booking status:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -56,8 +72,6 @@ const MyBookings = () => {
                   </p>
                 </div>
 
-                {/* Cancel Booking Button (if applicable) */}
-
                 <div className='flex justify-between flex-col gap-3'>
                   {/* Status Badge */}
                   <span
@@ -74,9 +88,7 @@ const MyBookings = () => {
                   {booking.status === "Pending" && token && (
                     <button
                       onClick={() =>
-                        removeBooking(token, booking.id).then(() => {
-                          loadBookings(token);
-                        })
+                        handleBookingCancel(booking.id, "Cancelled")
                       }
                       className='px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md transition-all hover:bg-red-600 hover:scale-105 active:scale-95'>
                       Cancel

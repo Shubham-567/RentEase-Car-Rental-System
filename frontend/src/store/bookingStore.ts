@@ -8,7 +8,7 @@ import {
   fetchAllBookings,
 } from "../api/booking";
 
-interface Booking {
+export interface Booking {
   id: number;
   user_id: number;
   car_id: number;

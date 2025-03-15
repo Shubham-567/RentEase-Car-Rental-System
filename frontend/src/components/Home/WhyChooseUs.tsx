@@ -13,7 +13,7 @@ const WhyChooseUs = () => {
       </div>
 
       <div className='grid md:grid-cols-4 gap-4 max-w-6xl mx-auto text-center'>
-        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg'>
+        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2'>
           <CheckCircle className='w-16 h-16 mx-auto text-accent-500' />
           <h3 className='text-2xl font-bold mt-6 text-text-950'>
             Affordable Prices
@@ -23,7 +23,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg'>
+        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2'>
           <Headset className='w-16 h-16 mx-auto text-accent-500' />
           <h3 className='text-2xl font-bold mt-6 text-text-950'>
             24/7 Support
@@ -33,7 +33,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg'>
+        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2'>
           <Car className='w-16 h-16 mx-auto text-accent-500' />
           <h3 className='text-2xl font-bold mt-6 text-text-950'>
             Wide Selection
@@ -43,7 +43,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg'>
+        <div className='bg-accent-50 p-10 rounded-3xl border border-accent shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2'>
           <CalendarCheck className='w-16 h-16 mx-auto text-accent-500' />
           <h3 className='text-2xl font-bold mt-6 text-text-950'>
             Easy Booking

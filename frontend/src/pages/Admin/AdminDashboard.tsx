@@ -43,7 +43,7 @@ const AdminDashboard = () => {
   ).length;
   const pendingBookings = bookings.filter((b) => b.status === "Pending").length;
   const canceledBookings = bookings.filter(
-    (b) => b.status === "Canceled"
+    (b) => b.status === "Cancelled"
   ).length;
 
   return (
@@ -112,7 +112,7 @@ const AdminDashboard = () => {
             </li>
             <li className='flex items-center gap-2 text-red-600 text-lg'>
               <XCircle size={20} />{" "}
-              <span className='font-medium'>Canceled:</span> {canceledBookings}
+              <span className='font-medium'>Cancelled:</span> {canceledBookings}
             </li>
           </ul>
         </div>

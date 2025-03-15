@@ -1,12 +1,12 @@
 import { AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const NotFound = () => {
+const NotFound = (props: any) => {
   return (
-    <div className='flex flex-col items-center justify-center min-h-[600px] px-6 text-text-800'>
+    <div className='flex flex-col items-center justify-center min-h-screen px-6 text-text-800'>
       {/* Icon */}
-      <div className='flex items-center justify-center w-24 h-24 rounded-full bg-red-500 shadow-lg animate-fade-in'>
-        <AlertTriangle className='w-14 h-14 text-white' />
+      <div className='flex items-center justify-center w-20 h-20 rounded-full bg-red-500 shadow-lg animate-fade-in'>
+        <AlertTriangle className='w-12 h-12 text-white' />
       </div>
 
       {/* Title */}
@@ -14,13 +14,14 @@ const NotFound = () => {
         404
       </h1>
       <h2 className='mt-2 text-2xl font-semibold sm:text-3xl'>
-        Page Not Found
+        {props.title ? props.title : "Page Not Found"}
       </h2>
 
       {/* Message */}
-      <p className='mt-4 text-text-600 text-center max-w-md sm:text-lg'>
-        Oops! The page you are looking for might have been removed or is
-        temporarily unavailable.
+      <p className='mt-4 text-text-800 text-center max-w-md sm:text-lg'>
+        {props.message
+          ? props.message
+          : "Oops! The page you are looking for might have been removed or is temporarily unavailable."}
       </p>
 
       {/* Back Button */}

@@ -7,6 +7,7 @@ import {
   fetchUserBookings,
   fetchAllUsers,
 } from "../api/users";
+import { useAuthStore } from "./authStore";
 
 export interface User {
   id: number;
@@ -73,6 +74,8 @@ export const useUserStore = create<UserState>((set) => ({
       set({ user: userData, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
+      useAuthStore.setState({ isAuthenticated: false });
+      localStorage.removeItem("token");
     }
   },
 

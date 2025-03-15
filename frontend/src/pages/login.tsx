@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useAuthStore } from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import DangerAlert from "../components/DangerAlert";
@@ -32,11 +32,20 @@ const Login = () => {
     [email, password, login, navigate]
   );
 
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (token) {
+      console.log("Your already logged in. Please logout to login/register");
+      navigate("/"); //home
+    }
+  }, []);
+
   return (
     <div className='flex items-center justify-center py-10 px-4 pt-20'>
       <form
         onSubmit={handleSubmit}
-        className='bg-secondary-50 border border-secondary-200 p-6 shadow-lg rounded-xl w-full max-w-md'>
+        className='bg-background-50 border border-background-200 p-6 shadow-lg rounded-xl w-full max-w-md'>
         <h2 className='text-3xl text-center text-text-900 font-bold mb-6'>
           Login
         </h2>

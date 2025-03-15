@@ -12,6 +12,7 @@ import AdminRoute from "./AdminRoutes";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import ManageCars from "../pages/Admin/ManageCars";
 import ManageUsers from "../pages/Admin/ManageUser";
+import ManageBookings from "../pages/Admin/ManageBookings";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
             <Route path='/admin' element={<AdminDashboard />} />
             <Route path='/admin/manage-cars' element={<ManageCars />} />
             <Route path='/admin/manage-users' element={<ManageUsers />} />
+            <Route path='/admin/manage-bookings' element={<ManageBookings />} />
           </Route>
         </Route>
 

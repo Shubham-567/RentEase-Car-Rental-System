@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthState>((set) => {
           localStorage.setItem("token", data.token);
           set({ token: data.token, isAuthenticated: true });
 
-          await useUserStore.getState().loadUserProfile(data.token); // ✅ Ensure user is loaded
+          await useUserStore.getState().loadUserProfile(data.token);
 
           return "Login successful";
         }

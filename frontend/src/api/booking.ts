@@ -50,7 +50,7 @@ export const createBooking = async (
   }
 };
 
-// update booking status (admin only)
+// update booking status
 export const updateBookingStatus = async (
   token: string,
   bookingId: number,
