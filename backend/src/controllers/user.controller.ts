@@ -4,7 +4,22 @@ import {
   getUserProfile,
   updateUserProfile,
   getUserBookings,
+  getAllUsers,
 } from "../services/user.service.js";
+
+// fetch all users (admin only)
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users = await getAllUsers();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error",
+      error: error as Error,
+    });
+  }
+};
 
 // get user profile
 export const getProfile = async (

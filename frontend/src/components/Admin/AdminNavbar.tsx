@@ -42,7 +42,7 @@ const AdminNavbar = () => {
         </NavLink>
 
         {/* Desktop Menu */}
-        <ul className='hidden md:flex space-x-6 text-md'>
+        <ul className='hidden lg:flex space-x-6 text-md'>
           {[
             {
               name: "Dashboard",
@@ -78,7 +78,7 @@ const AdminNavbar = () => {
         </ul>
 
         {/* Right Side */}
-        <div className='hidden md:flex items-center space-x-4'>
+        <div className='hidden lg:flex items-center space-x-4'>
           <button
             onClick={handleLogout}
             className='bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 flex items-center gap-2'>
@@ -98,10 +98,10 @@ const AdminNavbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className='flex items-center gap-2 md:hidden'>
+        <div className='lg:hidden flex items-center gap-2'>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className='md:hidden focus:outline-none text-text-900 dark:text-text-900'>
+            className='lg:hidden focus:outline-none text-text-900 dark:text-text-900'>
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
 
@@ -120,7 +120,7 @@ const AdminNavbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className='md:hidden bg-background-50 mt-2'>
+        <div className='lg:hidden bg-background-50 mt-2'>
           <ul className='flex flex-col space-y-4 p-4 text-lg'>
             {[
               {

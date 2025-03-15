@@ -2,6 +2,19 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL + "/users";
 
+// fetch all users (admin only)
+export const fetchAllUsers = async (token: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/all`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to fetch users.");
+  }
+};
+
 // fetch user profile
 export const fetchUserProfile = async (token: string) => {
   try {

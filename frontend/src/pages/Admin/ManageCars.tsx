@@ -97,7 +97,7 @@ const ManageCars = () => {
       </div>
 
       {/* Filters Section */}
-      <div className='bg-accent-50 dark:bg-background-100 p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-4 items-center'>
+      <div className='bg-accent-50 p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-4 items-center'>
         {/* Search Input */}
         <input
           type='text'
@@ -166,94 +166,104 @@ const ManageCars = () => {
 
       {/* Cars Table */}
       <div className='overflow-x-auto bg-secondary-50 p-6 rounded-xl shadow-lg border border-gray-200'>
-        <table className='w-full text-gray-700 border-collapse rounded-lg overflow-hidden shadow-md'>
-          <thead>
-            <tr className='bg-primary-500 text-white text-left'>
-              <th className='p-4'>Image</th>
-              <th className='p-4'>Name</th>
-              <th className='p-4'>Brand</th>
-              <th className='p-4'>Model</th>
-              <th className='p-4'>Year</th>
-              <th className='p-4'>Price/Day</th>
-              <th className='p-4'>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedCars.map((car, index) => (
-              <tr
-                key={car.id}
-                className={`border-t border-primary-500 ${
-                  index % 2 === 0 ? "bg-background-50" : "bg-secondary-50"
-                } hover:bg-background-100 transition-all`}>
-                <td className='p-4'>
-                  <img
-                    src={car.images[0]}
-                    alt={car.name}
-                    className='w-30 h-16 object-cover rounded-md'
-                  />
-                </td>
-                <td className='p-4 font-medium text-gray-900'>{car.name}</td>
-                <td className='p-4'>{car.brand}</td>
-                <td className='p-4'>{car.model}</td>
-                <td className='p-4'>{car.year}</td>
-                <td className='p-4 font-semibold text-green-700'>
-                  ₹{car.price_per_day.toLocaleString()}
-                </td>
-                <td className='p-4 flex gap-2'>
-                  {/* Edit Button */}
-                  <button
-                    onClick={() => {
-                      setSelectedCar(car);
-                      setIsModalOpen(true);
-                    }}
-                    className='p-2 bg-green-600 text-white rounded-lg flex items-center gap-2 hover:bg-green-700 transition-all shadow-md focus:ring-2 focus:ring-green-400 focus:outline-none active:scale-95'>
-                    <Edit size={18} /> Edit
-                  </button>
-
-                  {/* Delete Button */}
-                  <button
-                    onClick={() => handleDelete(car.id)}
-                    className='p-2 bg-red-600 text-white rounded-lg flex items-center gap-2 hover:bg-red-700 transition-all shadow-md focus:ring-2 focus:ring-red-400 focus:outline-none active:scale-95'>
-                    <Trash size={18} /> Delete
-                  </button>
-                </td>
+        {filteredCars.length === 0 ? (
+          <p className='text-center text-gray-500 col-span-full'>
+            No cars match your filters.
+          </p>
+        ) : (
+          <table className='w-full text-gray-700 border-collapse rounded-lg overflow-hidden shadow-md'>
+            <thead>
+              <tr className='bg-primary-500 text-white text-left'>
+                <th className='p-4'>Image</th>
+                <th className='p-4'>Name</th>
+                <th className='p-4'>Brand</th>
+                <th className='p-4'>Model</th>
+                <th className='p-4'>Year</th>
+                <th className='p-4'>Price/Day</th>
+                <th className='p-4'>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {paginatedCars.map((car, index) => (
+                <tr
+                  key={car.id}
+                  className={`border-t border-primary-500 ${
+                    index % 2 === 0 ? "bg-background-50" : "bg-secondary-50"
+                  } hover:bg-background-100 transition-all`}>
+                  <td className='p-4'>
+                    <img
+                      src={car.images[0]}
+                      alt={car.name}
+                      className='w-30 h-16 object-cover rounded-md'
+                    />
+                  </td>
+                  <td className='p-4 font-medium text-gray-900'>{car.name}</td>
+                  <td className='p-4'>{car.brand}</td>
+                  <td className='p-4'>{car.model}</td>
+                  <td className='p-4'>{car.year}</td>
+                  <td className='p-4 font-semibold text-green-700'>
+                    ₹{car.price_per_day.toLocaleString()}
+                  </td>
+                  <td className='p-4 flex gap-2'>
+                    {/* Edit Button */}
+                    <button
+                      onClick={() => {
+                        setSelectedCar(car);
+                        setIsModalOpen(true);
+                      }}
+                      className='p-2 bg-green-600 text-white rounded-lg flex items-center gap-2 hover:bg-green-700 transition-all shadow-md focus:ring-2 focus:ring-green-400 focus:outline-none active:scale-95'>
+                      <Edit size={18} /> Edit
+                    </button>
+
+                    {/* Delete Button */}
+                    <button
+                      onClick={() => handleDelete(car.id)}
+                      className='p-2 bg-red-500 text-white rounded-lg flex items-center gap-2 hover:bg-red-700 transition-all shadow-md focus:ring-2 focus:ring-red-400 focus:outline-none active:scale-95'>
+                      <Trash size={18} /> Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Pagination Controls */}
-      <div className='flex justify-center mt-6 gap-4 items-center'>
-        {/* Previous Button */}
-        <button
-          onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
-          disabled={currentPage === 1}
-          className={`px-4 py-2 rounded-lg shadow-md transition-all ${
-            currentPage === 1
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"
-          }`}>
-          ← Previous
-        </button>
 
-        {/* Page Number Display */}
-        <span className='text-lg font-medium text-gray-700 dark:text-white'>
-          Page {currentPage} of {totalPages}
-        </span>
+      {filteredCars.length > carsPerPage && (
+        <div className='flex justify-center mt-6 gap-4 items-center'>
+          {/* Previous Button */}
+          <button
+            onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+              currentPage === 1
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"
+            }`}>
+            ← Previous
+          </button>
 
-        {/* Next Button */}
-        <button
-          onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
-          disabled={currentPage === totalPages}
-          className={`px-4 py-2 rounded-lg shadow-md transition-all ${
-            currentPage === totalPages
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"
-          }`}>
-          Next →
-        </button>
-      </div>
+          <span className='text-lg font-medium text-gray-700 dark:text-white'>
+            Page {currentPage} of {totalPages}
+          </span>
+
+          {/* Next Button */}
+          <button
+            onClick={() =>
+              setCurrentPage(Math.min(currentPage + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+              currentPage === totalPages
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"
+            }`}>
+            Next →
+          </button>
+        </div>
+      )}
 
       {isModalOpen && (
         <AddEditCarModal

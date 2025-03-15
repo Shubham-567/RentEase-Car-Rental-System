@@ -10,11 +10,13 @@ import {
   CheckCircle,
   Clock,
   XCircle,
+  LayoutDashboard,
 } from "lucide-react";
 
 const AdminDashboard = () => {
   const { cars, loadCars } = useCarStore();
   const { user, loadUserProfile } = useUserStore();
+  const { users, loadAllUsers } = useUserStore();
   const { bookings, loadBookings } = useBookingStore();
 
   const token = localStorage.getItem("token");
@@ -23,12 +25,14 @@ const AdminDashboard = () => {
     if (token) {
       if (cars.length === 0) loadCars();
       if (!user) loadUserProfile(token);
+      if (users.length === 0) loadAllUsers(token);
       if (bookings.length === 0) loadBookings(token);
     }
   }, []);
 
-  if (!cars || !bookings)
+  if (!cars || !bookings || !users) {
     return <p className='text-center text-lg text-gray-600'>Loading...</p>;
+  }
 
   // Calculate statistics
   const totalRevenue = bookings
@@ -45,6 +49,7 @@ const AdminDashboard = () => {
   return (
     <div className='p-8 bg-background-50 min-h-screen'>
       <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
+        <LayoutDashboard size={40} className='text-accent-500' />
         Admin Dashboard
       </h2>
 
@@ -52,7 +57,11 @@ const AdminDashboard = () => {
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6'>
         {[
           { title: "Total Cars", value: cars.length, icon: Car },
-          { title: "Total Users", value: user ? 1 : 0, icon: User },
+          {
+            title: "Total Users",
+            value: users.length,
+            icon: User,
+          },
           {
             title: "Total Bookings",
             value: bookings.length,

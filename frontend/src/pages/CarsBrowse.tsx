@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useCarStore } from "../store/carsStore";
-import DangerAlert from "../components/DangerAlert";
 import CarHero from "../components/Cars/CarHero";
 import Filters from "../components/Cars/Filters";
 import CarCard from "../components/Cars/CarCard";
@@ -8,7 +7,7 @@ import CarCard from "../components/Cars/CarCard";
 const CarsBrowse = () => {
   const { cars, loading, error, loadCars } = useCarStore();
   const [filteredCars, setFilteredCars] = useState(cars);
-  const [visibleCount, setVisibleCount] = useState(8); // Show 8 initially
+  const [visibleCount, setVisibleCount] = useState(8);
   const [searchQuery, setSearchQuery] = useState("");
 
   const [filters, setFilters] = useState({
@@ -38,12 +37,17 @@ const CarsBrowse = () => {
   }, [cars, filters, searchQuery]);
 
   if (loading)
-    return <p className='text-center text-gray-600'>Loading cars...</p>;
+    return (
+      <p className='my-10 text-center text-xl text-gray-600'>Loading cars...</p>
+    );
 
   if (error)
     return (
       <div className='w-1/3 mx-auto'>
-        <DangerAlert message={error} />
+        <p className='my-10 text-center text-xl text-red-600'>
+          <span className='font-bold'>Error: </span>
+          {error}
+        </p>
       </div>
     );
 

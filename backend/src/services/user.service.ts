@@ -2,6 +2,15 @@ import bcrypt from "bcryptjs";
 import { Pool } from "../config/db.js";
 import { User } from "../models/user.model.js";
 
+// fetch all users
+export const getAllUsers = async (): Promise<User[]> => {
+  const [rows]: any = await Pool.query(
+    "SELECT id, name, email, phone, role FROM users"
+  );
+
+  return rows; // all users
+};
+
 // fetch user profile by id
 export const getUserProfile = async (userId: number): Promise<User | null> => {
   const [rows]: any = await Pool.query(

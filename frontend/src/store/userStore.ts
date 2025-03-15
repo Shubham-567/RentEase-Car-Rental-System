@@ -5,9 +5,10 @@ import {
   updateUserProfile,
   changeUserPassword,
   fetchUserBookings,
+  fetchAllUsers,
 } from "../api/users";
 
-interface User {
+export interface User {
   id: number;
   name: string;
   email: string;
@@ -26,10 +27,12 @@ interface Booking {
 }
 
 interface UserState {
+  users: User[];
   user: User | null;
   bookings: Booking[];
   loading: boolean;
   error: string | null;
+  loadAllUsers: (token: string) => Promise<void>;
   loadUserProfile: (token: string) => Promise<void>;
   updateUser: (
     token: string,
@@ -44,9 +47,23 @@ interface UserState {
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
+  users: [],
   bookings: [],
   loading: false,
   error: null,
+
+  loadAllUsers: async (token) => {
+    set({ loading: true, error: null });
+
+    try {
+      const allUsers = await fetchAllUsers(token);
+
+      // console.log("all users: ", allUsers);
+      set({ users: allUsers, loading: false });
+    } catch (error: any) {
+      set({ error: error.message, loading: false });
+    }
+  },
 
   loadUserProfile: async (token) => {
     set({ loading: true, error: null });
