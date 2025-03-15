@@ -1,6 +1,7 @@
+import { lazy } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useUserStore } from "../store/userStore";
-import NotFound from "../pages/NotFound";
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 const AdminRoute = () => {
   const { user, loading } = useUserStore();

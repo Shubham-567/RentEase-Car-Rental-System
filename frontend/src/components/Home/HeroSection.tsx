@@ -18,7 +18,7 @@ const HeroSection = () => {
         <div className='flex flex-wrap justify-center lg:justify-start gap-5'>
           <Link
             to='/browse-cars'
-            className='bg-primary-500 text-text-50 dark:text-text-950 px-7 py-3 rounded-lg text-lg font-semibold shadow-2xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-primary-400 hover:bg-primary-600'
+            className='bg-primary-500 text-text-50 dark:text-text-950 px-7 py-3 rounded-lg text-lg font-semibold hover:shadow-2xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-primary-400 hover:bg-primary-600'
             aria-label='Explore Cars'>
             Explore Cars
           </Link>

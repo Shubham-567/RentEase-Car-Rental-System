@@ -5,4 +5,21 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+
+  server: {
+    host: "0.0.0.0", // Allow external access
+    port: 5173, // Default Vite port
+    allowedHosts: [
+      "rentease.onrender.com",
+      "localhost", // Allow localhost for local testing
+    ],
+  },
+  preview: {
+    host: "0.0.0.0",
+    port: 5173,
+    allowedHosts: ["rentease.onrender.com", "localhost"],
+  },
+  build: {
+    chunkSizeWarningLimit: 1000, // Increase limit to avoid warnings
+  },
 });

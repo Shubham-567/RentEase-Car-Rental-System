@@ -34,8 +34,8 @@ const ManageBookings = () => {
     const updatedBookings = bookings.filter((booking) => {
       const matchesSearch =
         searchTerm === "" ||
-        booking.user_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        booking.car_name.toLowerCase().includes(searchTerm.toLowerCase());
+        booking.user_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        booking.car_name?.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesStatus =
         filterStatus === "" || booking.status === filterStatus;
