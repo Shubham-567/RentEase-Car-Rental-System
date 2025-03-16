@@ -12,10 +12,10 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-secondary-100 dark:bg-background-50 text-text-950 py-8 px-6 md:px-16 shadow-lg pt-10'>
-      <div className='max-w-7xl mx-auto flex flex-wrap justify-between gap-10'>
+    <footer className='bg-secondary-100 dark:bg-background-50 text-text-950 py-10 px-6 sm:px-8 md:px-16 shadow-lg'>
+      <div className='max-w-7xl mx-auto flex flex-col lg:flex-row justify-between gap-12'>
         {/* Company Info & Newsletter */}
-        <div className='max-w-md'>
+        <div className='max-w-md text-left'>
           <h2 className='text-3xl font-bold text-primary-600 flex items-center'>
             <Car size={35} className='mr-2 text-primary-600' />
             RentEase
@@ -26,26 +26,26 @@ const Footer = () => {
           </p>
 
           {/* Newsletter */}
-          <h3 className='mt-6 text-xl font-semibold text-primary-700'>
+          <h3 className='mt-6 text-lg font-semibold text-primary-700'>
             Subscribe
           </h3>
           <form className='mt-4 flex items-center bg-background-200 rounded-lg overflow-hidden shadow-md'>
             <input
               type='email'
               placeholder='Enter your email'
-              className='px-4 py-2 flex-1 bg-transparent text-text-950 placeholder-text-800 text-base focus:outline-none'
+              className='px-4 py-2 flex-1 bg-transparent text-text-950 placeholder-text-800 text-sm sm:text-base focus:outline-none'
               aria-label='Email address'
             />
-            <button className='bg-primary-500 px-5 py-2 flex items-center gap-2 text-white text-base font-medium hover:bg-primary-600 transition-all'>
+            <button className='bg-primary-500 px-4 py-2 flex items-center gap-2 text-white text-sm sm:text-base font-medium hover:bg-primary-600 transition-all'>
               <Mail size={18} /> Subscribe
             </button>
           </form>
         </div>
 
-        {/* Navigation Contact and Social Section */}
-        <div className='flex flex-col sm:flex-row items-start gap-10'>
+        {/* Navigation, Contact, and Social Section */}
+        <div className='flex flex-col md:flex-row gap-6 sm:gap-10 md:gap-14'>
           {/* Quick Links */}
-          <div>
+          <div className='text-left'>
             <h3 className='text-xl font-semibold text-primary-700'>
               Quick Links
             </h3>
@@ -68,9 +68,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className='flex justify-center flex-col gap-10 md:gap-5 md:flex-col xl:flex-row'>
+          {/* Contact Info & Social Media */}
+          <div className='flex flex-col sm:flex-row gap-10 md:gap-5'>
             {/* Contact Info */}
-            <div>
+            <div className='text-left'>
               <h3 className='text-xl font-semibold text-primary-700'>
                 Contact Us
               </h3>
@@ -79,7 +80,7 @@ const Footer = () => {
             </div>
 
             {/* Social Media */}
-            <div>
+            <div className='text-left'>
               <h3 className='text-xl font-semibold text-primary-700'>
                 Follow Us
               </h3>
@@ -100,7 +101,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className='text-center text-text-700 text-base mt-10 border-t border-text-300 pt-3'>
+      <div className='text-left sm:text-left md:text-center text-text-700 text-base mt-10 border-t border-text-300 pt-3'>
         © {currentYear} RentEase. All rights reserved.
       </div>
     </footer>

@@ -41,7 +41,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
       : 1;
 
   // Tax and additional charges
-  const GST_RATE = 0.18; // 18% GST
+  const GST_RATE = 0.18;
   const SERVICE_CHARGE = 500;
 
   const basePrice = totalDays * pricePerDay;
@@ -50,7 +50,6 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
   const formatDate = (date: Date | null) => {
     return date ? date.toLocaleDateString("en-GB") : "N/A";
-    // format: dd / mm / yyyy
   };
 
   const handleBooking = async () => {
@@ -76,16 +75,22 @@ const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   return (
-    <div className='fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 animate-fadeIn'>
-      <div className='bg-background-50 p-6 md:p-8 rounded-2xl shadow-2xl w-[90%] max-w-lg border border-gray-200'>
+    <div
+      className='fixed inset-0 bg-black/60 flex justify-center items-center z-50 animate-fadeIn'
+      onClick={onClose} // Close modal on outside click
+    >
+      <div
+        className='bg-background-50 p-6 md:p-8 rounded-xl shadow-2xl w-[95%] max-w-lg border border-gray-200 overflow-auto max-h-[90vh]'
+        onClick={(e) => e.stopPropagation()} // Prevent close on modal click
+      >
         {/* Modal Header */}
-        <h2 className='text-2xl font-bold text-text-900 flex items-center gap-2'>
+        <h2 className='text-xl md:text-2xl font-bold text-text-900 flex items-center gap-2'>
           <CalendarCheck size={24} className='text-primary-600' />
           Confirm Your Booking
         </h2>
 
         {/* Booking Details */}
-        <div className='mt-4 space-y-3 text-text-950 text-lg'>
+        <div className='mt-4 space-y-3 text-text-950 text-base md:text-lg'>
           <p className='flex items-center gap-2'>
             <Car size={20} className='text-accent-600' />
             <span>
@@ -98,46 +103,49 @@ const BookingModal: React.FC<BookingModalProps> = ({
               User Name: <span className='font-medium'>{userName}</span>
             </span>
           </p>
-          <p className='flex items-center gap-2'>
-            <Clock size={20} className='text-accent-600' />
-            <span>Rental Period:</span>
-            <span className='font-medium'>
+          <p className='flex flex-col md:flex-row gap-1'>
+            <span className='flex items-center gap-2'>
+              <Clock size={20} className='text-accent-600' />
+              <span>Rental Period:</span>
+            </span>
+            <span className='font-medium pl-7 sm:pl-0'>
               {formatDate(startDate)} - {formatDate(endDate)}
             </span>
           </p>
+
           <hr className='border-gray-300' />
 
           {/* Pricing Breakdown */}
-          <p className='flex justify-between text-lg font-medium'>
+          <p className='flex justify-between text-base md:text-lg font-medium'>
             <span>Base Price ({totalDays} days):</span>
             <span>₹{basePrice.toLocaleString()}</span>
           </p>
-          <p className='flex justify-between text-lg'>
+          <p className='flex justify-between text-base md:text-lg'>
             <span>GST (18%):</span>
             <span>₹{gstAmount.toLocaleString()}</span>
           </p>
-          <p className='flex justify-between text-lg'>
+          <p className='flex justify-between text-base md:text-lg'>
             <span>Service Charge:</span>
             <span>₹{SERVICE_CHARGE.toLocaleString()}</span>
           </p>
           <hr className='border-gray-400' />
 
-          <p className='text-xl font-semibold text-primary-900 flex justify-between items-center'>
+          <p className='text-lg md:text-xl font-semibold text-primary-900 flex justify-between items-center'>
             <span>Total Price:</span>
             <span>₹{finalTotal.toLocaleString()}</span>
           </p>
         </div>
 
         {/* Action Buttons */}
-        <div className='mt-6 flex justify-end gap-4'>
+        <div className='mt-6 flex flex-col md:flex-row justify-end gap-3'>
           <button
             onClick={onClose}
-            className='px-5 py-3 text-text-800 bg-gray-200 rounded-lg font-medium shadow-sm transition-all hover:bg-gray-300 hover:scale-105 active:scale-95'>
+            className='w-full md:w-auto px-5 py-3 text-text-800 bg-gray-200 rounded-lg font-medium shadow-sm transition-all hover:bg-gray-300 hover:scale-105 active:scale-95'>
             Cancel
           </button>
           <button
             onClick={handleBooking}
-            className='px-6 py-3 bg-primary-500 text-white rounded-lg font-medium shadow-lg transition-all hover:scale-105 hover:bg-primary-500 active:scale-95'>
+            className='w-full md:w-auto px-6 py-3 bg-primary-500 text-white rounded-lg font-medium shadow-lg transition-all hover:scale-105 hover:bg-primary-500 active:scale-95'>
             Confirm Booking
           </button>
         </div>

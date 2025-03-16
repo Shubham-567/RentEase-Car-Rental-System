@@ -66,16 +66,17 @@ const Profile = () => {
   };
 
   return (
-    <div className='max-w-4xl mx-auto my-8 p-8 bg-background-50 shadow-xl rounded-2xl border border-gray-200'>
-      <h2 className='text-3xl font-semibold text-text-900 flex items-center justify-center gap-2 mb-4'>
+    <div className='max-w-4xl w-full mx-auto my-8 p-6 md:p-8 bg-background-50 shadow-xl rounded-2xl border border-gray-200'>
+      <h2 className='text-2xl md:text-3xl font-semibold text-text-900 flex items-center justify-center gap-2 mb-6'>
         <User size={26} className='text-accent-600' /> My Account
       </h2>
+
       {/* Profile & Settings Layout */}
-      <div className='grid md:grid-cols-2 gap-8'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8'>
         {/* Left: Profile Info */}
         <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200'>
-          <h3 className='text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
-            <User size={26} className='text-accent-600' /> Personal Information
+          <h3 className='text-lg md:text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
+            <User size={24} className='text-accent-600' /> Personal Information
           </h3>
 
           {editMode ? (
@@ -111,15 +112,15 @@ const Profile = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className='flex gap-4'>
+              <div className='flex flex-col sm:flex-row gap-4'>
                 <button
                   onClick={handleUpdateProfile}
-                  className='flex items-center gap-2 px-5 py-2 bg-primary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-primary-600 active:scale-95'>
+                  className='w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2 bg-primary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-primary-600 active:scale-95'>
                   <Save size={18} /> Save
                 </button>
                 <button
                   onClick={() => setEditMode(false)}
-                  className='flex items-center gap-2 px-5 py-2 bg-gray-400 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-gray-500 active:scale-95'>
+                  className='w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2 bg-gray-400 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-gray-500 active:scale-95'>
                   <X size={18} /> Cancel
                 </button>
               </div>
@@ -138,7 +139,7 @@ const Profile = () => {
 
               <button
                 onClick={() => setEditMode(true)}
-                className='mt-3 flex items-center gap-2 px-5 py-2 bg-secondary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-secondary-600 active:scale-95'>
+                className='mt-3 flex items-center gap-2 px-5 py-2 w-full sm:w-auto bg-secondary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-secondary-600 active:scale-95'>
                 <Pencil size={18} /> Edit
               </button>
             </div>
@@ -147,7 +148,7 @@ const Profile = () => {
 
         {/* Right: Change Password */}
         <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200'>
-          <h3 className='text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
+          <h3 className='text-lg md:text-xl font-semibold text-text-900 flex items-center gap-2 mb-4'>
             <Lock size={22} className='text-accent-600' /> Change Password
           </h3>
 
@@ -184,7 +185,7 @@ const Profile = () => {
 
             <button
               onClick={handleChangePassword}
-              className='w-full py-3 text-center bg-primary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-102 hover:bg-primary-600 active:scale-95'>
+              className='w-full py-3 text-center bg-primary-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-105 hover:bg-primary-600 active:scale-95'>
               Change Password
             </button>
           </div>
@@ -197,7 +198,7 @@ const Profile = () => {
       {/* Logout Button */}
       <button
         onClick={logout}
-        className='mt-6 flex items-center gap-2 px-5 py-3 w-full bg-red-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-101 hover:bg-red-600 active:scale-95'>
+        className='mt-6 flex items-center justify-center gap-2 px-5 py-3 w-full bg-red-500 text-white rounded-lg font-medium shadow-md transition-all hover:scale-102 hover:bg-red-600 active:scale-95'>
         <LogOut size={20} /> Logout
       </button>
     </div>

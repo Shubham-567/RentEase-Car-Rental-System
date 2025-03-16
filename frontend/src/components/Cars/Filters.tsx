@@ -15,16 +15,16 @@ interface FiltersProps {
 
 const Filters: React.FC<FiltersProps> = ({ filters, setFilters }) => {
   return (
-    <div className='max-w-7xl mx-auto px-6 py-10'>
-      <div className='flex flex-col sm:flex-row gap-4 items-center justify-center'>
+    <div className='max-w-7xl mx-auto px-6 py-6 sm:py-10'>
+      <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-stretch justify-center'>
         {/* Fuel Type */}
         <div className='relative w-full sm:w-1/3'>
           <Fuel
-            className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500'
+            className='absolute left-4 top-1/2 -translate-y-1/2 text-gray-500'
             size={20}
           />
           <select
-            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all duration-200'
+            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all'
             onChange={(e) =>
               setFilters({ ...filters, fuel_type: e.target.value })
             }>
@@ -39,11 +39,11 @@ const Filters: React.FC<FiltersProps> = ({ filters, setFilters }) => {
         {/* Transmission */}
         <div className='relative w-full sm:w-1/3'>
           <Settings
-            className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500'
+            className='absolute left-4 top-1/2 -translate-y-1/2 text-gray-500'
             size={20}
           />
           <select
-            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all duration-200'
+            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all'
             onChange={(e) =>
               setFilters({ ...filters, transmission: e.target.value })
             }>
@@ -56,11 +56,11 @@ const Filters: React.FC<FiltersProps> = ({ filters, setFilters }) => {
         {/* Car Type */}
         <div className='relative w-full sm:w-1/3'>
           <Car
-            className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500'
+            className='absolute left-4 top-1/2 -translate-y-1/2 text-gray-500'
             size={20}
           />
           <select
-            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all duration-200'
+            className='w-full border border-gray-300 bg-white/80 dark:bg-background-100 text-text-900 pl-12 pr-4 py-3 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all'
             onChange={(e) => setFilters({ ...filters, type: e.target.value })}>
             <option value=''>Car Type</option>
             <option value='Sedan'>Sedan</option>

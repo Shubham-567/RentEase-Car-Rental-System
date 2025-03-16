@@ -43,7 +43,7 @@ const CarsBrowse = () => {
 
   if (error)
     return (
-      <div className='w-1/3 mx-auto'>
+      <div className='max-w-lg mx-auto px-6'>
         <p className='my-10 text-center text-xl text-red-600'>
           <span className='font-bold'>Error: </span>
           {error}
@@ -52,13 +52,16 @@ const CarsBrowse = () => {
     );
 
   return (
-    <div>
+    <div className='px-6'>
+      {/* Hero Section */}
       <CarHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+      {/* Filters Section */}
       <Filters filters={filters} setFilters={setFilters} />
 
       {/* Car Listings */}
-      <section id='car-listings' className='py-12 px-6'>
-        <div className='max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-3 xs:grid-cols-2 gap-4 sm:gap-8'>
+      <section id='car-listings' className='py-12'>
+        <div className='max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
           {filteredCars.length > 0 ? (
             filteredCars
               .slice(0, visibleCount)
@@ -75,7 +78,7 @@ const CarsBrowse = () => {
           <div className='flex justify-center mt-8'>
             <button
               onClick={() => setVisibleCount((prev) => prev + 8)}
-              className='bg-secondary-500 text-white px-6 py-2 rounded-lg text-lg font-medium shadow-md transition-all duration-300 hover:bg-secondary-600 hover:shadow-lg'>
+              className='bg-secondary-500 text-white px-6 py-3 rounded-lg text-lg font-medium shadow-md transition-all duration-300 hover:bg-secondary-600 hover:shadow-lg w-full sm:w-auto'>
               Load More
             </button>
           </div>
