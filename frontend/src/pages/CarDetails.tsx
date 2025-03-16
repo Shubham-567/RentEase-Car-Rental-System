@@ -8,9 +8,9 @@ import {
   Users,
   Shield,
   Gauge,
-  Loader,
   Star,
   CheckCircle,
+  ChevronLeft,
 } from "lucide-react";
 
 import CarDetailsCard from "../components/Cars/CarDetailsCard";
@@ -26,11 +26,7 @@ const CarDetails = () => {
   }, [id, loadCarById]);
 
   if (loading)
-    return (
-      <div className='text-center mt-10'>
-        <Loader className='animate-spin w-8 h-8 text-primary-500' />
-      </div>
-    );
+    return <div className='text-center mt-10'>Loading Car Details...</div>;
 
   if (error)
     return <div className='text-center text-red-500 mt-10'>{error}</div>;
@@ -43,19 +39,8 @@ const CarDetails = () => {
       {/* Back Button */}
       <Link
         to='/browse-cars'
-        className='text-primary-600 font-medium flex items-center gap-2 mb-6 transition-all duration-300 hover:text-primary-800'>
-        <svg
-          className='w-5 h-5'
-          fill='none'
-          stroke='currentColor'
-          strokeWidth='2'
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'>
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M15 19l-7-7 7-7'></path>
-        </svg>
+        className='text-primary-500 font-medium flex items-center gap-2 mb-6 transition-all duration-300 hover:text-primary-800'>
+        <ChevronLeft />
         Back to Cars
       </Link>
       <CarDetailsCard car={selectedCar} />
