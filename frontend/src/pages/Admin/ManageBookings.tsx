@@ -8,6 +8,7 @@ import {
   ChevronRight,
   NotebookText,
 } from "lucide-react";
+import Toast from "../../components/Toast";
 
 const ManageBookings = () => {
   const { bookings, loadBookings, changeBookingStatus, removeBooking } =
@@ -18,6 +19,13 @@ const ManageBookings = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
+
+  const [toast, setToast] = useState<{
+    id: number;
+    message: string;
+    type: "success" | "error" | "warning";
+  } | null>(null);
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -56,18 +64,53 @@ const ManageBookings = () => {
     if (window.confirm("Are you sure you want to update the booking status?")) {
       await changeBookingStatus(token!, bookingId, newStatus);
       loadBookings(token!);
+
+      if (newStatus === "Confirmed") {
+        setToast({
+          id: Date.now(),
+          message: `Booking status is now ${newStatus}!`,
+          type: "success",
+        });
+      } else if (newStatus === "Pending") {
+        setToast({
+          id: Date.now(),
+          message: `Booking status is now ${newStatus}!`,
+          type: "success",
+        });
+      } else {
+        setToast({
+          id: Date.now(),
+          message: `Booking status is now ${newStatus}!`,
+          type: "success",
+        });
+      }
     }
   };
 
   const handleDelete = async (bookingId: number) => {
     if (window.confirm("Are you sure you want to delete this booking?")) {
       await removeBooking(token!, bookingId);
-      handleFilter();
+      loadBookings(token!);
+
+      setToast({
+        id: Date.now(),
+        message: "Booking deleted successfully!",
+        type: "success",
+      });
     }
   };
 
   return (
     <div className='p-8 bg-background-50 min-h-screen'>
+      {toast && (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
         <NotebookText size={40} className='text-accent-500' />
         Manage Bookings

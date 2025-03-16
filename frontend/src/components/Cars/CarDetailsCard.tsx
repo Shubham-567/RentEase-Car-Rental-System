@@ -27,6 +27,10 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
   const handleRentNowClick = () => {
     if (!user) {
       navigate("/login");
+    } else if (!startDate || !endDate) {
+      alert("Please select both start and end dates.");
+    } else if (startDate > endDate) {
+      alert("End data should be after Start date .");
     } else {
       setIsModalOpen(true);
     }
@@ -87,6 +91,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
                   startDate={startDate}
                   endDate={endDate}
                   placeholderText='Select Start Date'
+                  dateFormat='dd/MM/yyyy'
                   className='w-full px-4 py-3 border border-gray-300 rounded-lg bg-background-50 focus:ring-2 focus:ring-primary-500 transition-all hover:scale-105 focus:outline-none shadow-sm'
                 />
               </div>
@@ -101,6 +106,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
                   startDate={startDate}
                   endDate={endDate}
                   placeholderText='Select End Date'
+                  dateFormat='dd/MM/yyyy'
                   className='w-full px-4 py-3 border border-gray-300 rounded-lg bg-background-50 focus:ring-2 focus:ring-primary-500 transition-all hover:scale-105 focus:outline-none shadow-sm'
                 />
               </div>

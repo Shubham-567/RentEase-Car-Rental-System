@@ -4,6 +4,7 @@ import type { Car } from "../../store/carsStore";
 import { Car as CarIcon, PlusCircle, Trash, Edit, Filter } from "lucide-react";
 
 import AddEditCarModal from "../../components/Admin/AddEditCarModal";
+import Toast from "../../components/Toast";
 
 const ManageCars = () => {
   const { cars, loadCars, deleteCarById } = useCarStore();
@@ -16,6 +17,12 @@ const ManageCars = () => {
   const [priceRange, setPriceRange] = useState("");
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
 
+  const [toast, setToast] = useState<{
+    id: number;
+    message: string;
+    type: "success" | "error" | "warning";
+  } | null>(null);
+  
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -75,11 +82,26 @@ const ManageCars = () => {
     if (window.confirm("Are you sure you want to delete this car?")) {
       await deleteCarById(carId, token!);
       handleFilter(); // Refresh list after deletion
+
+      setToast({
+        id: Date.now(),
+        message: "Car deleted successfully!",
+        type: "success",
+      });
     }
   };
 
   return (
     <div className='p-8 bg-background-50 min-h-screen'>
+      {toast && (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <div className='flex justify-between items-center'>
         <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
           <CarIcon size={40} className='text-accent-500' /> Manage Cars
@@ -269,6 +291,7 @@ const ManageCars = () => {
         <AddEditCarModal
           car={selectedCar}
           onClose={() => setIsModalOpen(false)}
+          setToast={setToast}
         />
       )}
     </div>

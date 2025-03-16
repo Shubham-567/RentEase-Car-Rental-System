@@ -88,6 +88,7 @@ export const useCarStore = create<CarState>((set) => ({
     set({ loading: true, error: null });
 
     try {
+      console.log(token);
       await updateCar(carId, carData, token);
       set({ loading: false });
       await useCarStore.getState().loadCars(); // refresh car list

@@ -1,5 +1,5 @@
 import { useBookingStore } from "../../store/bookingStore";
-import { CalendarCheck, Car, User, Clock, CreditCard } from "lucide-react";
+import { CalendarCheck, Car, User, Clock } from "lucide-react";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -36,11 +36,17 @@ const BookingModal: React.FC<BookingModalProps> = ({
           1,
           Math.ceil(
             (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-          )
+          ) + 1
         )
       : 1;
 
-  const totalPrice = totalDays * pricePerDay;
+  // Tax and additional charges
+  const GST_RATE = 0.18; // 18% GST
+  const SERVICE_CHARGE = 500;
+
+  const basePrice = totalDays * pricePerDay;
+  const gstAmount = basePrice * GST_RATE;
+  const finalTotal = basePrice + gstAmount + SERVICE_CHARGE;
 
   const formatDate = (date: Date | null) => {
     return date ? date.toLocaleDateString("en-GB") : "N/A";
@@ -59,7 +65,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
         car_id: carId,
         start_date: startDate.toISOString().split("T")[0],
         end_date: endDate.toISOString().split("T")[0],
-        total_price: totalPrice,
+        total_price: finalTotal,
       });
 
       alert("Booking confirmed!");
@@ -79,11 +85,11 @@ const BookingModal: React.FC<BookingModalProps> = ({
         </h2>
 
         {/* Booking Details */}
-        <div className='mt-4 space-y-3 text-text-800 text-lg'>
+        <div className='mt-4 space-y-3 text-text-950 text-lg'>
           <p className='flex items-center gap-2'>
             <Car size={20} className='text-accent-600' />
             <span>
-              Car: <span className='font-medium'>{carName}</span>{" "}
+              Car: <span className='font-medium'>{carName}</span>
             </span>
           </p>
           <p className='flex items-center gap-2'>
@@ -99,9 +105,26 @@ const BookingModal: React.FC<BookingModalProps> = ({
               {formatDate(startDate)} - {formatDate(endDate)}
             </span>
           </p>
-          <p className='text-xl font-semibold text-primary-900 flex items-center gap-2'>
-            <CreditCard size={22} className='text-primary-600' />
-            Total Price: ₹{totalPrice.toLocaleString()}
+          <hr className='border-gray-300' />
+
+          {/* Pricing Breakdown */}
+          <p className='flex justify-between text-lg font-medium'>
+            <span>Base Price ({totalDays} days):</span>
+            <span>₹{basePrice.toLocaleString()}</span>
+          </p>
+          <p className='flex justify-between text-lg'>
+            <span>GST (18%):</span>
+            <span>₹{gstAmount.toLocaleString()}</span>
+          </p>
+          <p className='flex justify-between text-lg'>
+            <span>Service Charge:</span>
+            <span>₹{SERVICE_CHARGE.toLocaleString()}</span>
+          </p>
+          <hr className='border-gray-400' />
+
+          <p className='text-xl font-semibold text-primary-900 flex justify-between items-center'>
+            <span>Total Price:</span>
+            <span>₹{finalTotal.toLocaleString()}</span>
           </p>
         </div>
 

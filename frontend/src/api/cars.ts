@@ -43,10 +43,15 @@ export const updateCar = async (
   token: string
 ) => {
   try {
+    console.log("Updating Car ID:", carId);
+    console.log("Car Data:", carData);
+    console.log("Token:", token);
+
     const response = await axios.put(`${API_URL}/${carId}`, carData, {
-      headers: { Authorizations: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log("Update Response: ", response.data);
     return response.data;
   } catch (error) {
     throw new Error("Failed to update car.");

@@ -86,20 +86,41 @@ export const updateCar = async (
     throw new Error("No fields provided for update");
   }
 
-  // fields = "name, brand, model, etc..";
-  const fields = Object.keys(car)
-    .map((key) => `${key} = ?`)
-    .join(", ");
+  const { images, ...carFields } = car;
 
-  const values = Object.values(car); // array of values
+  // updating car details
+  if (Object.keys(carFields).length > 0) {
+    // fields = "name, brand, model, etc..";
+    const fields = Object.keys(carFields)
+      .map((key) => `${key} = ?`)
+      .join(", ");
 
-  const [result]: any = await Pool.query(
-    `UPDATE cars SET ${fields} WHERE id = ?`,
-    [...values, id]
-  );
+    const values = Object.values(carFields); // array of values
 
-  if (result.affectedRows === 0) {
-    throw new Error(`Car with ID ${id} not found`);
+    // console.log("Values", values);
+
+    const [result]: any = await Pool.query(
+      `UPDATE cars SET ${fields} WHERE id = ?`,
+      [...values, id]
+    );
+
+    if (result.affectedRows === 0) {
+      throw new Error(`Car with ID ${id} not found`);
+    }
+  }
+
+  // updating images
+  if (images && images.length > 0) {
+    // deleting old images
+    await Pool.query("DELETE FROM car_images WHERE car_id = ?", [id]);
+
+    // inserting new images
+    for (const imageUrl of images) {
+      await Pool.query(
+        "INSERT INTO car_images (car_id, image_url) VALUES (?, ?)",
+        [id, imageUrl]
+      );
+    }
   }
 };
 

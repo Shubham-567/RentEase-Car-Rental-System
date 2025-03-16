@@ -5,9 +5,17 @@ import { X, Trash2, Loader2, PlusCircle } from "lucide-react";
 const AddEditCarModal = ({
   car,
   onClose,
+  setToast,
 }: {
   car: Car | null;
   onClose: () => void;
+  setToast: React.Dispatch<
+    React.SetStateAction<{
+      id: number;
+      message: string;
+      type: "success" | "error" | "warning";
+    } | null>
+  >;
 }) => {
   const { addNewCar, updateExistingCar } = useCarStore();
   const token = localStorage.getItem("token");
@@ -103,11 +111,28 @@ const AddEditCarModal = ({
 
       if (car) {
         await updateExistingCar(car.id, carData, token!);
+
+        setToast({
+          id: Date.now(),
+          message: "Car updated successfully!",
+          type: "success",
+        });
       } else {
         await addNewCar(carData, token!);
+
+        setToast({
+          id: Date.now(),
+          message: "Car added successfully!",
+          type: "success",
+        });
       }
       onClose();
     } catch (err) {
+      setToast({
+        id: Date.now(),
+        message: "Failed to save car!",
+        type: "error",
+      });
       setError("Failed to save car. Please try again.");
     } finally {
       setLoading(false);
@@ -116,7 +141,7 @@ const AddEditCarModal = ({
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black/50'>
-      <div className='bg-white dark:bg-background-100 p-6 rounded-xl shadow-2xl w-full max-w-lg max-h-screen overflow-y-auto'>
+      <div className='bg-background-50 p-6 rounded-xl shadow-2xl w-full max-w-lg max-h-screen overflow-y-auto'>
         {/* Header */}
         <div className='flex justify-between items-center border-b-2 border-accent-500 pb-3 mb-5'>
           <h3 className='text-2xl font-semibold text-text-900'>
