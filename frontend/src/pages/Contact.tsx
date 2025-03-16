@@ -25,7 +25,7 @@ const Contact = () => {
   };
 
   return (
-    <section className='min-h-screen flex items-center justify-center px-4 sm:px-6 py-6'>
+    <section className='lg:min-h-screen flex items-center justify-center px-4 sm:px-6 py-6'>
       <div className='max-w-3xl w-full bg-background-50 shadow-xl rounded-lg p-6 sm:p-10 md:p-14'>
         {/* Heading */}
         <h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-950 text-left'>

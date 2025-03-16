@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <section className='min-h-screen flex items-center justify-center px-4 sm:px-6 py-6'>
+    <section className='lg:min-h-screen flex items-center justify-center px-4 sm:px-6 py-6'>
       <div className='max-w-5xl w-full bg-background-50 shadow-lg rounded-lg p-6 md:p-12 flex flex-col lg:flex-row lg:items-start gap-10'>
         {/* Left Section: Text Content */}
         <div className='flex-1 text-left'>
