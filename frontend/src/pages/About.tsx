@@ -9,7 +9,7 @@ const About = () => {
           <h1 className='text-3xl md:text-5xl font-extrabold text-text-950 leading-tight'>
             About <span className='text-primary-500'>RentEase</span>
           </h1>
-          <hr className='w-24 md:w-32 h-1 bg-accent-500 my-3 md:my-4' />
+          <hr className='w-24 md:w-32 border-none rounded-2xl h-1 bg-accent-500 my-3 md:my-4' />
 
           <p className='text-base md:text-lg text-text-900 mt-4 leading-relaxed'>
             RentEase makes car rentals simple and hassle-free. Whether you need

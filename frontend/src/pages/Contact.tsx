@@ -31,7 +31,7 @@ const Contact = () => {
         <h1 className='text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-950 text-left'>
           Contact <span className='text-primary'>Us</span>
         </h1>
-        <hr className='w-24 md:w-32 h-1 bg-accent-500 my-3 md:my-4' />
+        <hr className='w-24 border-none rounded-2xl md:w-32 h-1 bg-accent-500 my-3 md:my-4' />
 
         <p className='text-base sm:text-lg text-text-700 text-left mb-6'>
           Have questions? Fill out the form and we'll get back to you soon.
