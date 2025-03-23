@@ -10,7 +10,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
     <section className='relative text-text-900 text-center py-16 sm:py-24 px-6'>
       <div className='max-w-3xl mx-auto'>
         <h1 className='text-4xl sm:text-6xl font-extrabold text-text-900 leading-tight drop-shadow-md'>
-          Find Your <br className="md:hidden" /> Perfect Ride
+          Find Your <br className='sm:hidden' /> Perfect Ride
         </h1>
         <p className='text-md sm:text-xl text-text-700 mt-5 max-w-xl mx-auto leading-relaxed'>
           Explore our{" "}
