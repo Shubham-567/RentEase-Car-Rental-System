@@ -1,4 +1,5 @@
 import { useBookingStore } from "../../store/bookingStore";
+import { createRazorpayOrder, verifyPayment } from "../../api/payment";
 import { CalendarCheck, Car, User, Clock } from "lucide-react";
 
 interface BookingModalProps {
@@ -8,6 +9,8 @@ interface BookingModalProps {
   userId: number;
   carName: string;
   userName: string;
+  userEmail: string;
+  userPhone: string;
   startDate: Date | null;
   endDate: Date | null;
   pricePerDay: number;
@@ -20,6 +23,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
   userId,
   carName,
   userName,
+  userEmail,
+  userPhone,
   startDate,
   endDate,
   pricePerDay,
@@ -59,16 +64,59 @@ const BookingModal: React.FC<BookingModalProps> = ({
     }
 
     try {
-      await createNewBooking(token, {
-        user_id: userId,
-        car_id: carId,
-        start_date: startDate.toISOString().split("T")[0],
-        end_date: endDate.toISOString().split("T")[0],
-        total_price: finalTotal,
-      });
+      const order = await createRazorpayOrder(finalTotal);
 
-      alert("Booking confirmed!");
-      onClose();
+      if (!order.id) {
+        alert("Failed to create order.");
+        return;
+      }
+
+      // options for razorpay payment modal
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Razorpay key
+        amount: order.amount, // amount in paise
+        currency: "INR",
+        name: "Car Rental",
+        descriptions: `Booking for ${carName}`,
+        order_id: order.id, // order id from backend
+        handler: async (response: any) => {
+          const paymentData = {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          // verifying payment on backend
+          const verification = await verifyPayment(paymentData);
+
+          if (verification.success) {
+            // storing booking in databases
+            await createNewBooking(token, {
+              user_id: userId,
+              car_id: carId,
+              start_date: startDate.toISOString().split("T")[0],
+              end_date: endDate.toISOString().split("T")[0],
+              total_price: finalTotal,
+              status: "Confirmed",
+            });
+
+            alert("Booking confirmed!");
+            onClose();
+          } else {
+            alert("Payment verification failed.");
+          }
+        },
+        prefill: {
+          // to do  add actual user data
+          name: userName,
+          email: userEmail,
+          contact: userPhone,
+        },
+        theme: { color: "#ffa725" },
+      };
+
+      const razorpayInstance = new (window as any).Razorpay(options);
+      razorpayInstance.open(); // opening razorpay payment modal
     } catch (error) {
       alert("Failed to create booking.");
     }

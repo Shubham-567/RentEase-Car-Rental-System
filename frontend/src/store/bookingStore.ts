@@ -27,7 +27,7 @@ interface BookingState {
   error: string | null;
   createNewBooking: (
     token: string,
-    bookingData: Omit<Booking, "id" | "status">
+    bookingData: Omit<Booking, "id">
   ) => Promise<void>;
   loadBookings: (token: string) => Promise<void>;
   loadBookingById: (token: string, bookingId: number) => Promise<void>;

@@ -21,6 +21,10 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
   const user = useUserStore((state) => state.user);
   const userId = user?.id ?? 0;
   const userName = user?.name ?? "Guest";
+  const userEmail = user?.email ?? "guest@test.in";
+  const userPhone = user?.phone ?? "1234567890";
+
+  
 
   const handleRentNowClick = () => {
     if (!user) {
@@ -152,6 +156,8 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
         userId={userId}
         carName={`${car.brand} ${car.model}`}
         userName={userName}
+        userEmail={userEmail}
+        userPhone={userPhone}
         startDate={startDate}
         endDate={endDate}
         pricePerDay={car.price_per_day}
