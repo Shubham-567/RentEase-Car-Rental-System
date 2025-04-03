@@ -155,6 +155,7 @@ const ManageBookings = () => {
               <tr className='bg-primary-500 text-white'>
                 <th className='p-3 text-left'>User</th>
                 <th className='p-3 text-left'>Car</th>
+                <th className='p-3 text-left'>Created At</th>
                 <th className='p-3 text-left'>Start Date</th>
                 <th className='p-3 text-left'>End Date</th>
                 <th className='p-3 text-left'>Total Price</th>
@@ -169,6 +170,9 @@ const ManageBookings = () => {
                   className='border-t border-primary-500 hover:bg-background-100 transition-all'>
                   <td className='p-3'>{booking.user_name}</td>
                   <td className='p-3'>{booking.car_name}</td>
+                  <td className='p-3'>
+                    {new Date(booking.created_at).toLocaleDateString()}
+                  </td>
                   <td className='p-3'>
                     {new Date(booking.start_date).toLocaleDateString()}
                   </td>

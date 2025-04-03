@@ -26,7 +26,59 @@ const CarDetails = () => {
   }, [id, loadCarById]);
 
   if (loading)
-    return <div className='text-center mt-10'>Loading Car Details...</div>;
+    return (
+      <div className='container mx-auto px-3 md:px-0 py-6 animate-pulse'>
+        {/* Back Button Skeleton */}
+        <div className='h-6 w-42 bg-primary-100 rounded-lg mb-6'></div>
+
+        {/* Car Details Card Skeleton */}
+        <div className='p-6 sm:p-8 bg-background-50 rounded-2xl relative overflow-hidden'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-12'>
+            {/* Image Placeholder */}
+            <div className='w-full h-78 bg-accent-100 rounded-xl'></div>
+
+            {/* Car Details */}
+            <div className='flex flex-col gap-6'>
+              <div className='h-8 w-3/4 bg-primary-100 rounded-md'></div>
+              <div className='flex flex-wrap gap-3'>
+                <div className='h-6 w-24 bg-primary-100 rounded-full'></div>
+                <div className='h-6 w-20 bg-primary-100 rounded-full'></div>
+                <div className='h-6 w-28 bg-primary-100 rounded-full'></div>
+              </div>
+              <div className='h-5 w-full bg-primary-100 rounded-md'></div>
+              <div className='h-5 w-2/3 bg-primary-100 rounded-md'></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Section Skeleton */}
+        <div className='mt-12 p-6 bg-background-50 rounded-xl shadow-lg'>
+          <div className='h-6 w-40 bg-primary-100 rounded-md mb-4'></div>
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+            {Array(6)
+              .fill(null)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className='h-16 bg-primary-100 rounded-md'></div>
+              ))}
+          </div>
+        </div>
+
+        {/* Reviews Section Skeleton */}
+        <div className='mt-12 p-6 bg-background-50 rounded-xl shadow-lg'>
+          <div className='h-6 w-40 bg-primary-100 rounded-md mb-4'></div>
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <div key={index} className='p-4 bg-secondary-50 rounded-lg mb-4'>
+                <div className='h-4 w-24 bg-primary-100 rounded-md mb-2'></div>
+                <div className='h-5 w-3/4 bg-primary-100 rounded-md'></div>
+              </div>
+            ))}
+        </div>
+      </div>
+    );
 
   if (error)
     return <div className='text-center text-red-500 mt-10'>{error}</div>;

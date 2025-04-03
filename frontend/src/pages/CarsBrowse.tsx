@@ -36,45 +36,55 @@ const CarsBrowse = () => {
     );
   }, [cars, filters, searchQuery]);
 
-  if (loading)
-    return (
-      <p className='my-10 text-center text-xl text-gray-600'>Loading cars...</p>
-    );
-
-  if (error)
-    return (
-      <div className='max-w-lg mx-auto px-6'>
-        <p className='my-10 text-center text-xl text-red-600'>
-          <span className='font-bold'>Error: </span>
-          {error}
-        </p>
-      </div>
-    );
-
   return (
     <div className='px-6'>
       {/* Hero Section */}
       <CarHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
       {/* Filters Section */}
       <Filters filters={filters} setFilters={setFilters} />
 
-      {/* Car Listings */}
+      {/* Car Listings Section */}
       <section id='car-listings' className='py-12'>
         <div className='max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-          {filteredCars.length > 0 ? (
+          {/* Loading Skeletons */}
+          {loading ? (
+            Array.from({ length: 8 }).map((_, index) => (
+              <div
+                key={index}
+                className='bg-secondary-50 border border-primary-200 rounded-xl shadow-lg overflow-hidden animate-pulse'>
+                {/* Image Placeholder */}
+                <div className='relative'>
+                  <div className='w-full h-56 bg-primary-100 rounded-t-xl'></div>
+                  <div className='absolute top-4 left-4 bg-secondary-200 h-6 w-16 rounded-full'></div>
+                </div>
+
+                <div className='p-5 text-center'>
+                  <div className='h-6 w-3/4 bg-text-100 rounded-md mx-auto'></div>
+                  <div className='h-4 w-1/2 bg-text-100 rounded-md mx-auto mt-2'></div>
+                  <div className='h-6 w-1/3 bg-text-100 rounded-md mx-auto mt-3'></div>
+                  <div className='h-10 w-full bg-primary-100 rounded-lg mt-4'></div>
+                </div>
+              </div>
+            ))
+          ) : error ? (
+            <div className='col-span-full flex justify-center'>
+              <p className='my-10 text-center text-xl text-red-600 max-w-lg'>
+                <span className='font-bold'>Error: </span> {error}
+              </p>
+            </div>
+          ) : filteredCars.length > 0 ? (
             filteredCars
               .slice(0, visibleCount)
               .map((car) => <CarCard key={car.id} {...car} />)
           ) : (
-            <p className='text-center text-gray-500 col-span-full'>
+            <p className='text-center text-primary-500 col-span-full'>
               No cars match your filters.
             </p>
           )}
         </div>
 
         {/* Load More Button */}
-        {visibleCount < filteredCars.length && (
+        {visibleCount < filteredCars.length && !loading && (
           <div className='flex justify-center mt-8'>
             <button
               onClick={() => setVisibleCount((prev) => prev + 8)}

@@ -18,6 +18,7 @@ export interface Booking {
   end_date: string;
   total_price: number;
   status: string;
+  created_at: string;
 }
 
 interface BookingState {
@@ -27,7 +28,7 @@ interface BookingState {
   error: string | null;
   createNewBooking: (
     token: string,
-    bookingData: Omit<Booking, "id">
+    bookingData: Omit<Booking, "id" | "created_at">
   ) => Promise<void>;
   loadBookings: (token: string) => Promise<void>;
   loadBookingById: (token: string, bookingId: number) => Promise<void>;

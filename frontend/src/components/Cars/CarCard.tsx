@@ -36,7 +36,7 @@ const CarCard: React.FC<CarCardProps> = ({
           alt={name}
           className='w-full h-56 object-cover rounded-t-xl'
         />
-        <span className='absolute top-4 left-4 bg-secondary-500 text-white px-4 py-1 text-sm font-semibold rounded-full shadow-md'>
+        <span className='absolute top-4 left-4 bg-accent-600 text-white px-4 py-1 text-sm font-bold rounded-full shadow-md'>
           {type}
         </span>
       </div>

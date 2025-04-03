@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { PulseLoader } from "react-spinners";
 
 // pages
 const Login = lazy(() => import("../pages/login"));
@@ -25,7 +26,9 @@ import AdminRoute from "./AdminRoutes";
 
 // Loading fallback component
 const Loading = () => (
-  <div className='text-center text-lg p-10'>Loading...</div>
+  <div className='flex justify-center items-center h-[85vh]'>
+    <PulseLoader color='#FFA725' size={15} />
+  </div>
 );
 
 const AppRoutes = () => {
