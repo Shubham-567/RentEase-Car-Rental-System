@@ -5,6 +5,10 @@
 /* colors */
 @custom-variant dark (&:where(.dark, .dark *));
 
+.input-field {
+  @apply bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400;
+}
+
 /* Base layer with theme variables */
 @layer base {
   * {

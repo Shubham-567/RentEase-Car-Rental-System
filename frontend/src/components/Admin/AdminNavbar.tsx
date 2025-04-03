@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { useUserStore } from "../../store/userStore";
@@ -13,6 +13,9 @@ const AdminNavbar = () => {
     localStorage.getItem("theme") === "dark"
   );
 
+  // Reference for the navbar container
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -23,6 +26,20 @@ const AdminNavbar = () => {
     }
   }, [darkMode]);
 
+  // Close navbar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate("/admin/login");
@@ -32,35 +49,22 @@ const AdminNavbar = () => {
   if (!isAuthenticated || user?.role !== "admin") return null;
 
   return (
-    <nav className='bg-background-50 shadow-md p-4'>
+    <nav className='bg-background-50 shadow-md p-4 relative' ref={menuRef}>
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
         <NavLink
           to='/admin'
-          className='flex items-center gap-2 text-2xl font-bold text-primary-500 dark:text-primary-400'>
+          className='flex items-center gap-2 text-xl font-bold text-primary-500 dark:text-primary-400'>
           <ShieldUser size={25} /> RentEase Admin
         </NavLink>
 
         {/* Desktop Menu */}
         <ul className='hidden lg:flex space-x-6 text-md'>
           {[
-            {
-              name: "Dashboard",
-              path: "/admin",
-              end: true,
-            },
-            {
-              name: "Manage Cars",
-              path: "/admin/manage-cars",
-            },
-            {
-              name: "Manage Users",
-              path: "/admin/manage-users",
-            },
-            {
-              name: "Manage Bookings",
-              path: "/admin/manage-bookings",
-            },
+            { name: "Dashboard", path: "/admin", end: true },
+            { name: "Manage Cars", path: "/admin/manage-cars" },
+            { name: "Manage Users", path: "/admin/manage-users" },
+            { name: "Manage Bookings", path: "/admin/manage-bookings" },
           ].map(({ name, path, end }) => (
             <li key={name}>
               <NavLink
@@ -120,26 +124,13 @@ const AdminNavbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className='lg:hidden bg-background-50 mt-2'>
+        <div className='lg:hidden bg-background-50 mt-2 absolute left-0 right-0 shadow-md z-50'>
           <ul className='flex flex-col space-y-4 p-4 text-lg'>
             {[
-              {
-                name: "Dashboard",
-                path: "/admin",
-                end: true,
-              },
-              {
-                name: "Manage Cars",
-                path: "/admin/manage-cars",
-              },
-              {
-                name: "Manage Users",
-                path: "/admin/manage-users",
-              },
-              {
-                name: "Manage Bookings",
-                path: "/admin/manage-bookings",
-              },
+              { name: "Dashboard", path: "/admin", end: true },
+              { name: "Manage Cars", path: "/admin/manage-cars" },
+              { name: "Manage Users", path: "/admin/manage-users" },
+              { name: "Manage Bookings", path: "/admin/manage-bookings" },
             ].map(({ name, path, end }) => (
               <li key={name}>
                 <NavLink

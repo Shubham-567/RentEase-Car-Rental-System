@@ -101,7 +101,7 @@ const ManageBookings = () => {
   };
 
   return (
-    <div className='p-8 bg-background-50 min-h-screen'>
+    <div className='p-4 md:p-6 lg:p-8 bg-background-50 min-h-screen'>
       {toast && (
         <Toast
           key={toast.id}
@@ -111,25 +111,26 @@ const ManageBookings = () => {
         />
       )}
 
-      <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
-        <NotebookText size={40} className='text-accent-500' />
+      {/* Page Heading */}
+      <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold text-text-950 mb-6 flex items-center gap-3'>
+        <NotebookText className='text-accent-500 w-8 h-8 md:w-10 md:h-10' />
         Manage Bookings
       </h2>
 
       {/* Filters Section */}
-      <div className='bg-accent-50 p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-4 items-center'>
+      <div className='bg-accent-50 p-4 md:p-5 mb-6 rounded-xl shadow-lg flex flex-col sm:flex-row sm:flex-wrap gap-4 items-center'>
         <input
           type='text'
           placeholder='Search by User or Car'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className='p-3 flex-1 border text-text-950 border-gray-300 rounded-lg w-64 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'
+          className='p-3 flex-1 border text-text-950 border-gray-300 rounded-lg w-full sm:w-64 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'
         />
 
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className='p-3 border text-text-950 border-gray-300 rounded-lg w-44 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50 hover:cursor-pointer'>
+          className='p-3 border text-text-950 border-gray-300 rounded-lg w-full sm:w-44 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50 hover:cursor-pointer'>
           <option value=''>All Statuses</option>
           <option value='Confirmed'>Confirmed</option>
           <option value='Pending'>Pending</option>
@@ -138,13 +139,13 @@ const ManageBookings = () => {
 
         <button
           onClick={handleFilter}
-          className='px-5 py-3 bg-secondary-500 text-white font-bold flex gap-2 items-center rounded-lg hover:bg-secondary-600 transition-all shadow-md focus:ring-2 focus:ring-secondary-400'>
-          <RefreshCw size={20} /> Apply Filters
+          className='w-full sm:w-auto px-5 py-3 bg-secondary-500 text-white font-bold flex gap-2 items-center justify-center rounded-lg hover:bg-secondary-600 transition-all shadow-md focus:ring-2 focus:ring-secondary-400'>
+          <RefreshCw className='w-5 h-5' /> Apply Filters
         </button>
       </div>
 
       {/* Booking Table */}
-      <div className='overflow-x-auto bg-secondary-50 p-6 rounded-xl shadow-lg border border-gray-200'>
+      <div className='overflow-x-auto bg-secondary-50 p-4 md:p-6 rounded-xl shadow-lg border border-gray-200'>
         {paginatedBookings.length === 0 ? (
           <p className='text-center text-gray-500'>
             No bookings match your filters.
@@ -152,7 +153,7 @@ const ManageBookings = () => {
         ) : (
           <table className='w-full text-gray-700 border-collapse rounded-lg overflow-hidden shadow-md'>
             <thead>
-              <tr className='bg-primary-500 text-white'>
+              <tr className='bg-primary-500 text-white text-sm md:text-base'>
                 <th className='p-3 text-left'>User</th>
                 <th className='p-3 text-left'>Car</th>
                 <th className='p-3 text-left'>Created At</th>
@@ -167,7 +168,7 @@ const ManageBookings = () => {
               {paginatedBookings.map((booking) => (
                 <tr
                   key={booking.id}
-                  className='border-t border-primary-500 hover:bg-background-100 transition-all'>
+                  className='border-t border-primary-500 hover:bg-background-100 transition-all text-sm md:text-base'>
                   <td className='p-3'>{booking.user_name}</td>
                   <td className='p-3'>{booking.car_name}</td>
                   <td className='p-3'>
@@ -185,17 +186,17 @@ const ManageBookings = () => {
                   <td className='p-3'>
                     <span
                       className={`px-3 py-1 text-xs font-semibold rounded-full 
-                      ${
-                        booking.status === "Confirmed"
-                          ? "bg-green-100 text-green-600"
-                          : booking.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-600"
-                          : "bg-red-100 text-red-600"
-                      } border`}>
+                  ${
+                    booking.status === "Confirmed"
+                      ? "bg-green-100 text-green-600 border border-green-300"
+                      : booking.status === "Pending"
+                      ? "bg-yellow-100 text-yellow-600 border border-yellow-300"
+                      : "bg-red-100 text-red-600 border border-red-300"
+                  }`}>
                       {booking.status}
                     </span>
                   </td>
-                  <td className='p-3 flex gap-2 items-center'>
+                  <td className='p-3 flex flex-col sm:flex-row gap-2 items-center'>
                     <select
                       value={booking.status}
                       onChange={(e) =>
@@ -209,8 +210,8 @@ const ManageBookings = () => {
 
                     <button
                       onClick={() => handleDelete(booking.id)}
-                      className='px-3 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 hover:bg-red-700 hover:cursor-pointer transition-all shadow-md'>
-                      <Trash size={18} /> Delete
+                      className='w-full sm:w-auto px-3 py-2 bg-red-500 text-white rounded-lg flex items-center gap-2 justify-center hover:bg-red-700 hover:cursor-pointer transition-all shadow-md'>
+                      <Trash className='w-4 h-4' /> Delete
                     </button>
                   </td>
                 </tr>
@@ -222,16 +223,16 @@ const ManageBookings = () => {
 
       {/* Pagination Controls */}
       {filteredBookings.length > rowsPerPage && (
-        <div className='flex justify-center mt-6 gap-4 items-center'>
+        <div className='flex flex-col sm:flex-row justify-center mt-6 gap-4 items-center'>
           <button
             onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+            className={`px-4 py-2 rounded-lg shadow-md transition-all w-full sm:w-auto ${
               currentPage === 1
                 ? "bg-gray-300 text-gray-500"
                 : "bg-secondary-500 text-white hover:bg-secondary-600"
             }`}>
-            <ChevronLeft size={18} className='inline' /> Previous
+            <ChevronLeft className='w-4 h-4 inline' /> Previous
           </button>
 
           <span className='text-lg font-medium text-gray-700'>
@@ -243,12 +244,12 @@ const ManageBookings = () => {
               setCurrentPage(Math.min(currentPage + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+            className={`px-4 py-2 rounded-lg shadow-md transition-all w-full sm:w-auto ${
               currentPage === totalPages
                 ? "bg-gray-300 text-gray-500"
                 : "bg-secondary-500 text-white hover:bg-secondary-600"
             }`}>
-            Next <ChevronRight size={18} className='inline' />
+            Next <ChevronRight className='w-4 h-4 inline' />
           </button>
         </div>
       )}

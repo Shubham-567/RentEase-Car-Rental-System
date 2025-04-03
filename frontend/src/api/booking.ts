@@ -9,7 +9,6 @@ export const fetchAllBookings = async (token: string) => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error("Failed to fetch all bookings");
@@ -42,8 +41,6 @@ export const createBooking = async (
   }
 ) => {
   try {
-    console.log("Booking Data:", bookingData);
-
     const response = await axios.post(`${API_URL}`, bookingData, {
       headers: { Authorization: `Bearer ${token}` },
     });

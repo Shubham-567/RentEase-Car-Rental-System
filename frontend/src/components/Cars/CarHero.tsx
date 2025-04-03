@@ -40,7 +40,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
               />
             </div>
             <button
-              className='bg-primary-500 text-text-50 px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md w-full'
+              className='bg-primary-500 text-white px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md w-full'
               onClick={() => {
                 searchQuery.length > 0 &&
                   document
@@ -63,7 +63,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
               className='flex-1 bg-transparent text-text-950 placeholder-gray-500 focus:outline-none text-lg px-2'
             />
             <button
-              className='bg-primary-500 text-text-50 px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md'
+              className='bg-primary-500 text-white font-bold px-6 py-3 rounded-full hover:bg-primary-600 transition-all duration-300 shadow-md'
               onClick={() => {
                 searchQuery.length > 0 &&
                   document

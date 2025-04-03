@@ -48,29 +48,30 @@ const ManageUsers = () => {
   const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
-    <div className='p-8 bg-background-50 min-h-screen'>
-      <div className='flex justify-between items-center'>
-        <h2 className='text-4xl font-bold text-text-950 mb-8 flex items-center gap-3'>
-          <UsersIcon size={40} className='text-accent-500' /> Manage Users
+    <div className='p-6 sm:p-8 bg-background-50 min-h-screen'>
+      {/* Header */}
+      <div className='flex flex-wrap justify-between items-center gap-4'>
+        <h2 className='text-2xl sm:text-4xl font-bold text-text-950 flex items-center gap-3'>
+          <UsersIcon size={32} className='text-accent-500' /> Manage Users
         </h2>
       </div>
 
       {/* Filters Section */}
-      <div className='bg-accent-50 p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-4 items-center'>
+      <div className='bg-accent-50 p-4 sm:p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-3 sm:gap-4 items-center'>
         {/* Search Input */}
         <input
           type='text'
           placeholder='Search by Name or Email'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className='p-3 flex-1 border text-text-950 border-gray-300 rounded-lg w-64 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'
+          className='p-2 sm:p-3 sm:flex-1 border text-text-950 border-gray-300 rounded-lg w-full sm:w-64 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'
         />
 
         {/* Role Dropdown */}
         <select
           value={selectedRole}
           onChange={(e) => setSelectedRole(e.target.value)}
-          className='p-3 text-text-950 border border-gray-300 rounded-lg w-44 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'>
+          className='p-2 sm:p-3 border text-text-950 border-gray-300 rounded-lg w-full sm:w-44 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 bg-white dark:bg-background-50'>
           <option value=''>All Roles</option>
           <option value='admin'>Admin</option>
           <option value='customer'>Customer</option>
@@ -79,13 +80,13 @@ const ManageUsers = () => {
         {/* Apply Filters Button */}
         <button
           onClick={handleFilter}
-          className='px-5 py-3 bg-secondary-500 text-white font-bold flex gap-2 items-center rounded-lg hover:bg-secondary-600 transition-all shadow-md focus:ring-2 focus:ring-secondary-400 active:scale-95'>
-          <Filter size={20} /> Filter Users
+          className='px-4 sm:px-5 flex-1 sm:flex-none py-2 sm:py-3 bg-secondary-500 text-white font-bold flex gap-2 items-center rounded-lg hover:bg-secondary-600 transition-all shadow-md focus:ring-2 focus:ring-secondary-400 active:scale-95'>
+          <Filter size={18} /> Filter Users
         </button>
       </div>
 
       {/* Users Table */}
-      <div className='overflow-x-auto bg-secondary-50 p-6 rounded-xl shadow-lg border border-gray-200'>
+      <div className='overflow-x-auto bg-secondary-50 p-4 sm:p-6 rounded-xl shadow-lg border border-gray-200'>
         {filteredUsers.length === 0 ? (
           <p className='text-center text-gray-500 col-span-full'>
             No users match your filters.
@@ -93,11 +94,11 @@ const ManageUsers = () => {
         ) : (
           <table className='w-full text-gray-700 border-collapse rounded-lg overflow-hidden shadow-md'>
             <thead>
-              <tr className='bg-primary-500 text-white text-left'>
-                <th className='p-4'>Name</th>
-                <th className='p-4'>Email</th>
-                <th className='p-4'>Phone</th>
-                <th className='p-4'>Role</th>
+              <tr className='bg-primary-500 text-white text-left text-sm sm:text-base'>
+                <th className='p-3 sm:p-4'>Name</th>
+                <th className='p-3 sm:p-4'>Email</th>
+                <th className='p-3 sm:p-4'>Phone</th>
+                <th className='p-3 sm:p-4'>Role</th>
               </tr>
             </thead>
             <tbody>
@@ -106,11 +107,13 @@ const ManageUsers = () => {
                   key={user.id}
                   className={`border-t border-primary-500 ${
                     index % 2 === 0 ? "bg-background-50" : "bg-secondary-50"
-                  } hover:bg-background-100 transition-all`}>
-                  <td className='p-4 font-medium text-gray-900'>{user.name}</td>
-                  <td className='p-4'>{user.email}</td>
-                  <td className='p-4'>{user.phone || "N/A"}</td>
-                  <td className='p-4'>{user.role}</td>
+                  } hover:bg-background-100 transition-all text-sm sm:text-base`}>
+                  <td className='p-3 sm:p-4 font-medium text-gray-900'>
+                    {user.name}
+                  </td>
+                  <td className='p-3 sm:p-4'>{user.email}</td>
+                  <td className='p-3 sm:p-4'>{user.phone || "N/A"}</td>
+                  <td className='p-3 sm:p-4'>{user.role}</td>
                 </tr>
               ))}
             </tbody>
@@ -120,21 +123,21 @@ const ManageUsers = () => {
 
       {/* Pagination Controls */}
       {filteredUsers.length > usersPerPage && (
-        <div className='flex justify-center mt-6 gap-4 items-center'>
+        <div className='flex flex-wrap justify-center items-center gap-2 sm:gap-4 mt-6 text-center'>
           {/* Previous Button */}
           <button
             onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+            className={`px-3 sm:px-4 py-2 rounded-lg min-w-[80px] shadow-md transition-all text-sm sm:text-base ${
               currentPage === 1
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"
             }`}>
-            ← Previous
+            ← Prev
           </button>
 
-          {/* Page Number Display */}
-          <span className='text-lg font-medium text-gray-700 dark:text-white'>
+          {/* Page Indicator */}
+          <span className='text-sm sm:text-lg font-medium text-gray-700 dark:text-white'>
             Page {currentPage} of {totalPages}
           </span>
 
@@ -144,7 +147,7 @@ const ManageUsers = () => {
               setCurrentPage(Math.min(currentPage + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-lg shadow-md transition-all ${
+            className={`px-3 sm:px-4 py-2 rounded-lg min-w-[80px] shadow-md transition-all text-sm sm:text-base ${
               currentPage === totalPages
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-secondary-500 text-white font-bold hover:bg-secondary-600 active:scale-95 focus:ring-2 focus:ring-secondary-400"

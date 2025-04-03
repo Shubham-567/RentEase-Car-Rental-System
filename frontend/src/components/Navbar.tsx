@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import { Menu, X, Car, User, Sun, Moon } from "lucide-react";
@@ -11,6 +11,8 @@ const Navbar = () => {
     localStorage.getItem("theme") === "dark"
   );
 
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -21,13 +23,26 @@ const Navbar = () => {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
   return (
-    <nav className='bg-background-50 shadow-md p-4'>
+    <nav ref={menuRef} className='bg-background-50 shadow-md p-4 relative'>
       <div className='container mx-auto flex justify-between items-center'>
         {/* Logo */}
         <NavLink
@@ -133,7 +148,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className='lg:hidden bg-background-50 mt-2'>
+        <div className='lg:hidden bg-background-50 mt-2 absolute left-0 right-0 shadow-md z-50'>
           <ul className='flex flex-col space-y-4 p-4 text-lg'>
             {["Home", "Browse Cars", "About", "Contact"].map((item) => (
               <li key={item}>

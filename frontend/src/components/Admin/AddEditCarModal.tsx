@@ -140,11 +140,11 @@ const AddEditCarModal = ({
   };
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black/50'>
-      <div className='bg-background-50 p-6 rounded-xl shadow-2xl w-full max-w-lg max-h-screen overflow-y-auto'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black/50 p-4'>
+      <div className='bg-background-50 p-6 rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto'>
         {/* Header */}
         <div className='flex justify-between items-center border-b-2 border-accent-500 pb-3 mb-5'>
-          <h3 className='text-2xl font-semibold text-text-900'>
+          <h3 className='text-xl sm:text-2xl font-semibold text-text-900'>
             {car ? "Edit Car" : "Add New Car"}
           </h3>
           <button
@@ -162,14 +162,14 @@ const AddEditCarModal = ({
         {/* Form */}
         <form onSubmit={handleSubmit} className='space-y-4'>
           {/* Name & Brand */}
-          <div className='grid grid-cols-2 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <input
               type='text'
               name='name'
               placeholder='Car Name'
               value={formData.name}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
             <input
@@ -178,20 +178,20 @@ const AddEditCarModal = ({
               placeholder='Brand'
               value={formData.brand}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
           </div>
 
-          {/* Model and Year */}
-          <div className='grid grid-cols-2 gap-4'>
+          {/* Model & Year */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <input
               type='text'
               name='model'
               placeholder='Model'
               value={formData.model}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
             <input
@@ -200,18 +200,18 @@ const AddEditCarModal = ({
               placeholder='Year'
               value={formData.year}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
           </div>
 
-          {/* Type and Price */}
-          <div className='grid grid-cols-2 gap-4'>
+          {/* Type & Price */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <select
               name='type'
               value={formData.type}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'>
+              className='input-field'>
               <option value='Sedan'>Sedan</option>
               <option value='SUV'>SUV</option>
               <option value='Hatchback'>Hatchback</option>
@@ -224,18 +224,18 @@ const AddEditCarModal = ({
               placeholder='Price per Day'
               value={formData.price_per_day}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
           </div>
 
-          {/* Fuel Type and Transmission */}
-          <div className='grid grid-cols-2 gap-4'>
+          {/* Fuel Type & Transmission */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <select
               name='fuel_type'
               value={formData.fuel_type}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'>
+              className='input-field'>
               <option value='Petrol'>Petrol</option>
               <option value='Diesel'>Diesel</option>
               <option value='Electric'>Electric</option>
@@ -245,21 +245,21 @@ const AddEditCarModal = ({
               name='transmission'
               value={formData.transmission}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'>
+              className='input-field'>
               <option value='Automatic'>Automatic</option>
               <option value='Manual'>Manual</option>
             </select>
           </div>
 
           {/* Seats & Availability */}
-          <div className='grid grid-cols-2 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
             <input
               type='number'
               name='seats'
               placeholder='Seats'
               value={formData.seats}
               onChange={handleChange}
-              className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 w-full rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+              className='input-field'
               required
             />
             <label className='flex items-center gap-2 text-text-800'>
@@ -289,14 +289,14 @@ const AddEditCarModal = ({
                   type='text'
                   value={image}
                   onChange={(e) => handleImageChange(index, e.target.value)}
-                  className='bg-white/80 dark:bg-background-50 text-primary-950 p-3 flex-1 rounded-lg shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-400'
+                  className='input-field flex-1'
                   placeholder='Enter image URL'
                 />
                 <button
                   type='button'
                   onClick={() => removeImageField(index)}
                   className='p-2 rounded bg-red-500 text-white hover:bg-red-600 transition'>
-                  <Trash2 size={28} />
+                  <Trash2 size={18} />
                 </button>
               </div>
             ))}
@@ -305,8 +305,7 @@ const AddEditCarModal = ({
                 type='button'
                 onClick={addImageField}
                 className='mt-2 flex items-center gap-2 px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition'>
-                <PlusCircle size={18} />
-                Add Image
+                <PlusCircle size={18} /> Add Image
               </button>
             )}
           </div>
