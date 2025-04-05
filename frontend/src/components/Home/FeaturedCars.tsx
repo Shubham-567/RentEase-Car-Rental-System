@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useCarStore } from "../../store/carsStore";
 import { useEffect } from "react";
 import CarCard from "../Cars/CarCard";
