@@ -31,12 +31,15 @@ const CarCard: React.FC<CarCardProps> = ({
   return (
     <div className='bg-secondary-50 border border-gray-200 rounded-xl shadow-lg overflow-hidden transform transition-all ease-in-out duration-300 hover:scale-102 hover:shadow-2xl'>
       <div className='relative'>
-        <img
-          src={images[0]}
-          alt={name}
-          className='w-full h-56 object-cover rounded-t-xl'
-        />
-        <span className='absolute top-4 left-4 bg-accent-600 text-white px-4 py-1 text-sm font-bold rounded-full shadow-md'>
+        <Link to={`/cars/${id}`}>
+          <img
+            src={images[0]}
+            alt={name}
+            className='w-full h-56 object-cover rounded-t-xl'
+          />
+        </Link>
+
+        <span className='absolute top-4 left-4 bg-lime-500 text-white 0 px-4 py-1 text-sm font-bold rounded-full shadow-md tracking-widest'>
           {type}
         </span>
       </div>

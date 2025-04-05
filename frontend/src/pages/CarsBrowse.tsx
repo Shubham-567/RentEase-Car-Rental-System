@@ -88,7 +88,7 @@ const CarsBrowse = () => {
           <div className='flex justify-center mt-8'>
             <button
               onClick={() => setVisibleCount((prev) => prev + 8)}
-              className='bg-secondary-500 text-white px-6 py-3 rounded-lg text-lg font-medium shadow-md transition-all duration-300 hover:bg-secondary-600 hover:shadow-lg w-full sm:w-auto'>
+              className='bg-accent-500 text-white px-6 py-3 rounded-lg text-md md:text-lg font-bold shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:bg-accent-500 hover:shadow-2xl hover:shadow-accent-500 dark:hover:shadow-accent-200'>
               Load More
             </button>
           </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <section className='relative text-black py-16 px-4 sm:px-8 flex flex-col items-center text-center overflow-hidden'>
+    <section className='relative text-black py-16 sm:py-24 px-4 sm:px-8 flex flex-col items-center text-center overflow-hidden'>
       <h2 className='text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight relative z-10 text-text-950 drop-shadow-xl'>
         Ready to Hit the Road?
       </h2>
@@ -14,7 +14,7 @@ const CallToAction = () => {
 
       <Link
         to='/browse-cars'
-        className='mt-10 bg-secondary-400 text-text-900 px-6 sm:px-10 py-3 sm:py-4 rounded-full text-lg sm:text-xl md:text-2xl font-bold flex items-center gap-3 sm:gap-4 shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:bg-secondary-500 hover:shadow-2xl hover:shadow-secondary-500 dark:hover:shadow-secondary-200 relative z-10'
+        className='mt-10 bg-accent-400 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-full text-lg sm:text-xl md:text-2xl font-bold flex items-center gap-3 sm:gap-4 shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:bg-accent-500 hover:shadow-2xl hover:shadow-accent-500 dark:hover:shadow-accent-200 relative z-10'
         aria-label='Get Started'>
         Get Started <ArrowRight className='w-6 h-6 sm:w-7 sm:h-7' />
       </Link>

@@ -36,7 +36,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      console.log("Your already logged in. Please logout to login/register");
+      alert("Your already logged in. Please logout to login/register");
       navigate("/"); //home
     }
   }, []);

@@ -1,5 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 
 // pages
@@ -31,9 +36,24 @@ const Loading = () => (
   </div>
 );
 
+const ScrollToTopOnRouteChange = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  return null;
+};
+
 const AppRoutes = () => {
   return (
     <Router>
+      <ScrollToTopOnRouteChange />
+
       <Suspense fallback={<Loading />}>
         <Routes>
           {/* User Layout */}

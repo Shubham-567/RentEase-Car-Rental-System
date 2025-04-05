@@ -10,7 +10,8 @@ export const getAllBookings = async (): Promise<Booking[]> => {
     bookings.start_date,
     bookings.end_date,
     bookings.total_price,
-    bookings.status
+    bookings.status, 
+    bookings.created_at
     FROM bookings
     JOIN users ON bookings.user_id = users.id
     JOIN cars ON bookings.car_id = cars.id
@@ -20,6 +21,7 @@ export const getAllBookings = async (): Promise<Booking[]> => {
   if (!bookings.length) {
     throw new Error("No bookings found");
   }
+
   return bookings;
 };
 

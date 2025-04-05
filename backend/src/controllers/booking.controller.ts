@@ -54,7 +54,6 @@ export const createNewBooking = async (
     req.body;
 
   // validations
-
   if (!user_id || !car_id || !start_date || !end_date || !total_price) {
     res.status(400).json({
       message: "Validation error",

@@ -34,7 +34,7 @@ const HeroSection = () => {
       {/* Hero Image Section */}
       <div className='w-full lg:w-1/2 flex justify-center relative mt-12 lg:mt-0'>
         {/* Image Background */}
-        <div className='absolute top-[-30px] w-[80%] sm:w-[85%] h-[280px] sm:h-[320px] md:h-[380px] rounded-full scale-110 bg-secondary-500/30 dark:bg-primary-500/20 blur-3xl'></div>
+        <div className='absolute top-[-30px] w-[80%] sm:w-[85%] h-[280px] sm:h-[320px] md:h-[380px] rounded-full scale-110 bg-primary-500/30 dark:bg-primary-500/15 blur-3xl'></div>
 
         {/* Hero Image */}
         <img

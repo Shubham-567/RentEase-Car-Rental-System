@@ -50,7 +50,7 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className='mt-4 space-y-2 text-text-800 text-base'>
-              {["Home", "Browse Cars", "About Us", "Contact"].map(
+              {["Home", "Browse Cars", "About", "Contact"].map(
                 (item, index) => (
                   <li key={index}>
                     <Link
