@@ -50,11 +50,10 @@ const ManageUsers = () => {
   return (
     <div className='p-6 sm:p-8 bg-background-50 min-h-screen'>
       {/* Header */}
-      <div className='flex flex-wrap justify-between items-center gap-4'>
-        <h2 className='text-2xl sm:text-4xl font-bold text-text-950 flex items-center gap-3'>
-          <UsersIcon size={32} className='text-accent-500' /> Manage Users
-        </h2>
-      </div>
+
+      <h2 className='text-2xl md:text-3xl lg:text-4xl font-bold text-text-950 mb-6 flex items-center gap-3'>
+        <UsersIcon size={32} className='text-accent-500' /> Manage Users
+      </h2>
 
       {/* Filters Section */}
       <div className='bg-accent-50 p-4 sm:p-5 mb-6 rounded-xl shadow-lg flex flex-wrap gap-3 sm:gap-4 items-center'>

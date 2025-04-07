@@ -11,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const register = useAuthStore((state) => state.register);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Register = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      setError("");
+      setError(null);
 
       if (!name || !email || !password || !phone) {
         setError("All fields are required.");
@@ -53,6 +53,16 @@ const Register = () => {
       navigate("/"); //home
     }
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   return (
     <div className='flex items-center justify-center py-10 px-4'>

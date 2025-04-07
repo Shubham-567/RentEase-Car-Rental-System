@@ -46,11 +46,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
           exit={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           className='
-        fixed bottom-4 left-4 right-4 mx-auto
-        sm:bottom-5 sm:right-5 sm:left-auto sm:mx-0
-        z-50 flex items-start sm:items-center w-auto sm:max-w-sm p-4
-        text-text-950 bg-secondary-50 rounded-xl shadow-lg border-2 border-secondary-500
-      '>
+          fixed bottom-4 left-4 right-4 mx-auto
+          sm:bottom-5 sm:right-5 sm:left-auto sm:mx-0
+          z-50 flex items-start sm:items-center w-auto sm:max-w-sm p-4
+          text-text-950 bg-secondary-50 dark:bg-secondary-100 rounded-xl shadow-lg ring-2 ring-accent-500
+        '>
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full ${icons[type].color}`}>
             {icons[type].icon}

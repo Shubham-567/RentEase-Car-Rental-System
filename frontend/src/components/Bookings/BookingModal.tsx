@@ -10,6 +10,7 @@ import {
   StickyNote,
   PhoneCall,
 } from "lucide-react";
+import { useState } from "react";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -50,6 +51,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 }) => {
   const { createNewBooking } = useBookingStore();
   const token = localStorage.getItem("token");
+  const [isRazorpayLoading, setIsRazorpayLoading] = useState(false);
 
   if (!isOpen) return null;
 
@@ -96,12 +98,16 @@ const BookingModal: React.FC<BookingModalProps> = ({
         return;
       }
 
+      setIsRazorpayLoading(true);
+
+      let paymentSuccessful = false;
+
       // options for razorpay payment modal
       const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID, // Razorpay key
         amount: order.amount, // amount in paise
         currency: "INR",
-        name: "Car Rental",
+        name: "RentEase Car Booking",
         descriptions: `Booking for ${carName}`,
         order_id: order.id, // order id from backend
         handler: async (response: any) => {
@@ -115,6 +121,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
           const verification = await verifyPayment(paymentData);
 
           if (verification.success) {
+            paymentSuccessful = true;
+
             // storing booking in databases
             await createNewBooking(token, {
               user_id: userId,
@@ -142,10 +150,26 @@ const BookingModal: React.FC<BookingModalProps> = ({
           contact: userPhone,
         },
         theme: { color: "#ffa725" },
+        modal: {
+          ondismiss: () => {
+            setIsRazorpayLoading(false);
+
+            if (!paymentSuccessful) {
+              showToast("Payment was cancelled.", "warning");
+            }
+          },
+        },
       };
 
+      setIsRazorpayLoading(true);
+
       const razorpayInstance = new (window as any).Razorpay(options);
+
       razorpayInstance.open(); // opening razorpay payment modal
+
+      razorpayInstance.on("payment.failed", () => {
+        setIsRazorpayLoading(false);
+      });
     } catch (error) {
       showToast("Failed to create booking.", "error");
     }
@@ -262,8 +286,14 @@ const BookingModal: React.FC<BookingModalProps> = ({
           </button>
           <button
             onClick={handleBooking}
-            className='w-full md:w-auto px-6 py-3 bg-primary-500 text-white rounded-lg font-medium shadow-lg transition-all hover:scale-105 hover:bg-primary-500 active:scale-95'>
-            Confirm Booking
+            disabled={isRazorpayLoading}
+            className={`w-full md:w-auto px-6 py-3 rounded-lg font-medium shadow-lg transition-all 
+            ${
+              isRazorpayLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-primary-500 text-white hover:scale-105 hover:bg-primary-600 active:scale-95"
+            }`}>
+            {isRazorpayLoading ? "Processing..." : "Confirm Booking"}
           </button>
         </div>
       </div>
