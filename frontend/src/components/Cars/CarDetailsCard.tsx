@@ -7,6 +7,8 @@ import { Fuel, Settings, Users, CalendarDays } from "lucide-react";
 import BookingModal from "../Bookings/BookingModal";
 import { Car } from "../../store/carsStore";
 import { useUserStore } from "../../store/userStore";
+import BookingForm from "../Bookings/BookingForm";
+import Toast from "../Toast";
 
 interface CarDetailsCardProps {
   car: Car;
@@ -24,19 +26,50 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
   const userEmail = user?.email ?? "guest@test.in";
   const userPhone = user?.phone ?? "1234567890";
 
-  
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState<{
+    name: string;
+    email: string;
+    phone: string;
+    pickupLocation?: string;
+    dropoffLocation?: string;
+    alternatePhone?: string;
+    note?: string;
+  }>({
+    name: userName,
+    email: userEmail,
+    phone: userPhone,
+  });
+
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error" | "warning";
+    id: number;
+  } | null>(null);
+
+  const showToast = (
+    message: string,
+    type: "success" | "error" | "warning"
+  ) => {
+    setToast({ message, type, id: Date.now() });
+  };
 
   const handleRentNowClick = () => {
     if (!user) {
-      navigate("/login");
+      showToast("Please login to book a car. ", "error");
+      setTimeout(() => {
+        navigate("/login");
+      }, 4000);
     } else if (!startDate || !endDate) {
-      alert("Please select both start and end dates.");
+      showToast("Please select both start and end dates. ", "error");
     } else if (startDate > endDate) {
-      alert("End date should be after the start date.");
+      showToast("End date should be after the start date. ", "error");
     } else {
-      setIsModalOpen(true);
+      setShowBookingForm(true);
     }
   };
+
+  const closeToast = () => setToast(null);
 
   return (
     <div className='p-6 sm:p-8 bg-background-50 rounded-2xl relative overflow-hidden'>
@@ -148,20 +181,51 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
         </div>
       </div>
 
-      {/* Booking modal */}
+      {/* Booking Form Modal */}
+      <BookingForm
+        isOpen={showBookingForm}
+        onClose={() => setShowBookingForm(false)}
+        carName={`${car.brand} ${car.model}`}
+        startDate={startDate}
+        endDate={endDate}
+        userName={bookingDetails.name}
+        userEmail={bookingDetails.email}
+        userPhone={bookingDetails.phone}
+        onProceed={(details) => {
+          setBookingDetails(details);
+          setIsModalOpen(true);
+        }}
+        showToast={showToast}
+      />
+
+      {/* Booking Confirmation Modal */}
       <BookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         carId={car.id}
         userId={userId}
         carName={`${car.brand} ${car.model}`}
-        userName={userName}
-        userEmail={userEmail}
-        userPhone={userPhone}
+        userName={bookingDetails.name}
+        userEmail={bookingDetails.email}
+        userPhone={bookingDetails.phone}
         startDate={startDate}
         endDate={endDate}
         pricePerDay={car.price_per_day}
+        pickupLocation={bookingDetails.pickupLocation}
+        dropoffLocation={bookingDetails.dropoffLocation}
+        alternatePhone={bookingDetails.alternatePhone}
+        note={bookingDetails.note}
+        showToast={showToast}
       />
+
+      {toast && (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
+      )}
     </div>
   );
 };

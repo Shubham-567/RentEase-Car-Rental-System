@@ -49,6 +49,10 @@ CREATE TABLE bookings (
     end_date DATE NOT NULL,
     total_price DECIMAL(10,2) NOT NULL CHECK (total_price >= 0),
     status ENUM('Pending', 'Confirmed', 'Cancelled', 'Completed') DEFAULT 'Pending',
+    pickup_location VARCHAR(255) NOT NULL,
+    dropoff_location VARCHAR(255) NOT NULL,
+    alternate_phone VARCHAR(20),
+    note TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT chk_dates CHECK (start_date <= end_date),
@@ -57,6 +61,7 @@ CREATE TABLE bookings (
     INDEX idx_user_id (user_id),
     INDEX idx_car_id (car_id)
 );
+
 
 
 USE car_rental_system;

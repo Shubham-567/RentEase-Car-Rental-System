@@ -6,6 +6,9 @@ export interface Booking {
   end_date: string;
   total_price: number;
   status?: "Pending" | "Confirmed" | "Cancelled" | "Completed";
-  created_at?: Date;
-  updated_at?: Date;
+  pickup_location?: string;
+  dropoff_location?: string;
+  alternate_phone?: string;
+  note?: string;
+  created_at?: string;
 }

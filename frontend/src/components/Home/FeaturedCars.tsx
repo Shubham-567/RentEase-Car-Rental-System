@@ -1,6 +1,7 @@
 import { useCarStore } from "../../store/carsStore";
 import { useEffect } from "react";
 import CarCard from "../Cars/CarCard";
+import DangerAlert from "../DangerAlert";
 
 const FeaturedCars = () => {
   const { cars, loading, error, loadCars } = useCarStore();
@@ -43,14 +44,12 @@ const FeaturedCars = () => {
       )}
 
       {error && !loading && (
-        <div className='w-full sm:w-2/3 md:w-1/3 mx-auto text-center'>
-          <div className='text-red-500 my-10 text-lg sm:text-xl'>
-            <span className='font-bold'>Error: </span>
-            {error}
-          </div>
+        <div className='flex justify-center items-center flex-col max-w-6/12 mx-auto'>
+          <DangerAlert message={error} />
+
           <button
             onClick={loadCars}
-            className='bg-primary-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-primary-600 transition'>
+            className='bg-primary-500 text-white px-6 py-3 w-full max-w-4/12 rounded-lg shadow-md hover:bg-primary-600 transition'>
             Retry
           </button>
         </div>

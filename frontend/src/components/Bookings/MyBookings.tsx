@@ -9,28 +9,37 @@ const MyBookings = () => {
   const { changeBookingStatus } = useBookingStore();
   const { token } = useAuthStore();
 
-  const handleBookingCancel = async (bookingId: number, newStatus: string) => {
-    if (window.confirm("Are you sure you want to update the booking status?")) {
-      try {
-        const response = await changeBookingStatus(
-          token!,
-          bookingId,
-          newStatus
-        );
-        console.log("Change booking response:", response);
+  useEffect(() => {
+    if (token) loadBookings(token);
+  }, [token, loadBookings]);
 
-        await loadBookings(token!);
-      } catch (error) {
-        console.error("Error changing booking status:", error);
-      }
+  const handleCancel = async (bookingId: number) => {
+    if (!window.confirm("Are you sure you want to cancel this booking?"))
+      return;
+
+    try {
+      await changeBookingStatus(token!, bookingId, "Cancelled");
+      await loadBookings(token!);
+    } catch (error) {
+      console.error("Failed to cancel booking:", error);
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      loadBookings(token);
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString("en-GB");
+
+  const renderStatusBadge = (status: string) => {
+    const base = "px-3 py-1 text-xs font-semibold rounded-sm border";
+    switch (status) {
+      case "Confirmed":
+        return `${base} bg-green-100 text-green-600 border-green-300`;
+      case "Pending":
+        return `${base} bg-yellow-100 text-yellow-600 border-yellow-300`;
+      case "Cancelled":
+      default:
+        return `${base} bg-red-100 text-red-600 border-red-300`;
     }
-  }, [token, loadBookings]);
+  };
 
   return (
     <div className='bg-secondary-50 p-6 rounded-xl shadow-md border border-gray-200 mt-6'>
@@ -46,11 +55,11 @@ const MyBookings = () => {
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className='p-5 border border-gray-300 rounded-xl bg-background-50 shadow-md flex flex-col md:flex-row items-start gap-4 md:gap-6 transition-all hover:shadow-lg'>
+                className='p-5 border border-gray-300 rounded-xl bg-background-50 shadow-md flex flex-col md:flex-row items-start gap-4 md:gap-6 hover:shadow-lg transition-shadow'>
                 {/* Car Image */}
                 <img
                   src={booking.car_image}
-                  alt={booking.car_name}
+                  alt={`${booking.car_name} image`}
                   className='w-full h-full md:w-32 md:h-20 object-cover rounded-lg shadow-md'
                 />
 
@@ -61,36 +70,25 @@ const MyBookings = () => {
                   </h4>
                   <p className='text-sm text-gray-600 flex items-center gap-2'>
                     <Calendar size={16} className='text-accent-500' />
-                    {new Date(booking.start_date).toLocaleDateString("en-GB")}
-                    <MoveRight size={20} />
-                    {new Date(booking.end_date).toLocaleDateString("en-GB")}
+                    {formatDate(booking.start_date)} <MoveRight size={20} />{" "}
+                    {formatDate(booking.end_date)}
                   </p>
                   <p className='text-sm font-medium text-gray-600 flex items-center gap-2'>
-                    <CreditCard size={16} className='text-primary-500' />₹
-                    {booking.total_price.toLocaleString()}
+                    <CreditCard size={16} className='text-primary-500' /> ₹
+                    {Number(booking.total_price).toLocaleString()}
                   </p>
                 </div>
 
-                {/* Status & Cancel Button */}
+                {/* Status + Cancel */}
                 <div className='flex flex-col items-start md:items-end gap-3 w-full md:w-auto'>
-                  {/* Status Badge */}
-                  <span
-                    className={`px-3 py-1 text-xs font-semibold rounded-sm ${
-                      booking.status === "Confirmed"
-                        ? "bg-green-100 text-green-600 border border-green-300"
-                        : booking.status === "Pending"
-                        ? "bg-yellow-100 text-yellow-600 border border-yellow-300"
-                        : "bg-red-100 text-red-600 border border-red-300"
-                    }`}>
+                  <span className={renderStatusBadge(booking.status)}>
                     {booking.status}
                   </span>
 
                   {booking.status === "Pending" && token && (
                     <button
-                      onClick={() =>
-                        handleBookingCancel(booking.id, "Cancelled")
-                      }
-                      className='px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md transition-all hover:bg-red-600 hover:scale-105 active:scale-95'>
+                      onClick={() => handleCancel(booking.id)}
+                      className='px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-red-600 hover:scale-105 active:scale-95 transition-all'>
                       Cancel
                     </button>
                   )}

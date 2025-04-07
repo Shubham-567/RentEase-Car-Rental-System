@@ -3,6 +3,7 @@ import { useCarStore } from "../store/carsStore";
 import CarHero from "../components/Cars/CarHero";
 import Filters from "../components/Cars/Filters";
 import CarCard from "../components/Cars/CarCard";
+import DangerAlert from "../components/DangerAlert";
 
 const CarsBrowse = () => {
   const { cars, loading, error, loadCars } = useCarStore();
@@ -67,10 +68,14 @@ const CarsBrowse = () => {
               </div>
             ))
           ) : error ? (
-            <div className='col-span-full flex justify-center'>
-              <p className='my-10 text-center text-xl text-red-600 max-w-lg'>
-                <span className='font-bold'>Error: </span> {error}
-              </p>
+            <div className='col-span-full flex flex-col mx-auto justify-center'>
+              <DangerAlert message={error} />
+
+              <button
+                onClick={loadCars}
+                className='bg-primary-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-primary-600 transition'>
+                Retry
+              </button>
             </div>
           ) : filteredCars.length > 0 ? (
             filteredCars

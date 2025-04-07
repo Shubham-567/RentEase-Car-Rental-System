@@ -10,7 +10,11 @@ export const getAllBookings = async (): Promise<Booking[]> => {
     bookings.start_date,
     bookings.end_date,
     bookings.total_price,
-    bookings.status, 
+    bookings.status,
+    bookings.pickup_location,
+    bookings.dropoff_location,
+    bookings.alternate_phone,
+    bookings.note,
     bookings.created_at
     FROM bookings
     JOIN users ON bookings.user_id = users.id
@@ -41,15 +45,38 @@ export const getBookingById = async (id: number): Promise<Booking> => {
 
 // create new booking
 export const createBooking = async (booking: Booking): Promise<number> => {
-  const { user_id, car_id, start_date, end_date, total_price, status } =
-    booking;
+  const {
+    user_id,
+    car_id,
+    start_date,
+    end_date,
+    total_price,
+    status,
+    pickup_location,
+    dropoff_location,
+    alternate_phone,
+    note,
+  } = booking;
 
   const [result]: any = await Pool.query(
-    "INSERT INTO bookings (user_id, car_id, start_date, end_date, total_price, status)VALUES (?, ?, ?, ?, ?, ?)",
-    [user_id, car_id, start_date, end_date, total_price, status ?? "Pending"]
+    `INSERT INTO bookings 
+    (user_id, car_id, start_date, end_date, total_price, status, pickup_location, dropoff_location, alternate_phone, note)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      user_id,
+      car_id,
+      start_date,
+      end_date,
+      total_price,
+      status ?? "Pending",
+      pickup_location,
+      dropoff_location,
+      alternate_phone ?? null,
+      note ?? null,
+    ]
   );
 
-  return result.insertId; // booking id
+  return result.insertId;
 };
 
 // update booking status

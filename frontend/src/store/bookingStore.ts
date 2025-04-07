@@ -19,6 +19,10 @@ export interface Booking {
   total_price: number;
   status: string;
   created_at: string;
+  pickup_location: string;
+  dropoff_location: string;
+  alternate_phone?: string;
+  note?: string;
 }
 
 interface BookingState {

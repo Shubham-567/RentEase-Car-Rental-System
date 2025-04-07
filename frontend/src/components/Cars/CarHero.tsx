@@ -1,4 +1,5 @@
 import { Search } from "lucide-react";
+import { useState } from "react";
 
 interface CarHeroProps {
   searchQuery: string;
@@ -6,6 +7,8 @@ interface CarHeroProps {
 }
 
 const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <section className='relative text-text-900 text-center py-16 sm:py-24 px-6'>
       <div className='max-w-3xl mx-auto'>
@@ -34,8 +37,8 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
                 type='text'
                 placeholder='Search cars by name, brand...'
                 aria-label='Search for rental cars'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 className='flex-1 bg-transparent text-text-950 placeholder-gray-500 focus:outline-none text-base px-2'
               />
             </div>
@@ -58,17 +61,21 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
               type='text'
               placeholder='Search cars by name, brand...'
               aria-label='Search for rental cars'
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               className='flex-1 bg-transparent text-text-950 placeholder-gray-500 focus:outline-none text-lg px-2'
             />
             <button
-              className='bg-primary-500 text-white font-bold px-6 py-3 rounded-full hover:bg-primary-600 transition-all duration-300 shadow-md'
+              className='bg-primary-500 text-white font-bold px-6 py-3 rounded-full hover:bg-primary-600 transition-all duration-300 shadow-md cursor-pointer'
               onClick={() => {
-                searchQuery.length > 0 &&
+                setSearchQuery(searchInput);
+
+                searchInput.length > 0 &&
                   document
                     .getElementById("car-listings")
                     ?.scrollIntoView({ behavior: "smooth" });
+
+                setSearchInput(""); // set input to empty string
               }}>
               Search
             </button>

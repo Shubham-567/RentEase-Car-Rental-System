@@ -24,7 +24,7 @@ const HeroSection = () => {
           </Link>
           <Link
             to='/browse-cars'
-            className='bg-secondary-500 text-text-950 dark:text-text-50 px-6 py-3 rounded-lg text-lg font-semibold transition-transform duration-300 hover:-translate-y-1 hover:shadow-secondary-400 hover:bg-secondary-600'
+            className='bg-secondary-500 text-text-50 dark:text-text-950 px-6 py-3 rounded-lg text-lg font-semibold transition-transform duration-300 hover:-translate-y-1 hover:shadow-secondary-400 hover:bg-secondary-600'
             aria-label='Book Now'>
             Book Now
           </Link>

@@ -50,11 +50,29 @@ export const createNewBooking = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { user_id, car_id, start_date, end_date, total_price, status } =
-    req.body;
+  const {
+    user_id,
+    car_id,
+    start_date,
+    end_date,
+    total_price,
+    status,
+    pickup_location,
+    dropoff_location,
+    alternate_phone,
+    note,
+  } = req.body;
 
   // validations
-  if (!user_id || !car_id || !start_date || !end_date || !total_price) {
+  if (
+    !user_id ||
+    !car_id ||
+    !start_date ||
+    !end_date ||
+    !total_price ||
+    !pickup_location ||
+    !dropoff_location
+  ) {
     res.status(400).json({
       message: "Validation error",
       errors: [
@@ -68,6 +86,15 @@ export const createNewBooking = async (
           : null,
         !total_price
           ? { field: "total_price", message: "Total price is required" }
+          : null,
+        !pickup_location
+          ? { field: "pickup_location", message: "Pickup location is required" }
+          : null,
+        !dropoff_location
+          ? {
+              field: "dropoff_location",
+              message: "Dropoff location is required",
+            }
           : null,
       ].filter(Boolean),
     });
@@ -83,6 +110,10 @@ export const createNewBooking = async (
       end_date,
       total_price,
       status,
+      pickup_location,
+      dropoff_location,
+      alternate_phone,
+      note,
     });
 
     res
@@ -125,11 +156,9 @@ export const removeBooking = async (
 
     res.status(200).json({ message: "Booking deleted successfully" });
   } catch (error) {
-    res
-      .status(404)
-      .json({
-        message: "Error deleting booking",
-        error: (error as Error).message,
-      });
+    res.status(404).json({
+      message: "Error deleting booking",
+      error: (error as Error).message,
+    });
   }
 };

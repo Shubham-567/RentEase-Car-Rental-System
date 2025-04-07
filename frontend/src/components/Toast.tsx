@@ -15,7 +15,7 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
     const timer = setTimeout(() => {
       setVisible(false); // Trigger exit animation
       setTimeout(onClose, 400); // Remove after animation
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onClose]);
@@ -41,19 +41,24 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: 30 }} // Start slightly below
-          animate={{ opacity: 1, y: 0 }} // Slide up
-          exit={{ opacity: 0, y: 30 }} // Slide down on exit
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className='fixed bottom-5 right-5 z-50 flex items-center w-full max-w-sm p-4 text-text-950 bg-secondary-50 rounded-xl shadow-lg border-2 border-secondary-500'>
+          className='
+        fixed bottom-4 left-4 right-4 mx-auto
+        sm:bottom-5 sm:right-5 sm:left-auto sm:mx-0
+        z-50 flex items-start sm:items-center w-auto sm:max-w-sm p-4
+        text-text-950 bg-secondary-50 rounded-xl shadow-lg border-2 border-secondary-500
+      '>
           <div
             className={`flex items-center justify-center w-10 h-10 rounded-full ${icons[type].color}`}>
             {icons[type].icon}
           </div>
-          <div className='ml-4 text-sm font-bold'>{message}</div>
+          <div className='ml-3 sm:ml-4 text-sm font-bold flex-1'>{message}</div>
           <button
             onClick={() => setVisible(false)}
-            className='ml-auto bg-transparent text-accent-500 hover:text-accent-800 rounded-lg focus:ring-2 focus:ring-accent-300 p-2 hover:bg-accent-100'>
+            className='ml-2 sm:ml-auto bg-transparent text-accent-500 hover:text-accent-800 rounded-lg focus:ring-2 focus:ring-accent-300 p-2 hover:bg-accent-100'>
             <X className='w-5 h-5' />
           </button>
         </motion.div>

@@ -1,6 +1,15 @@
 import { useBookingStore } from "../../store/bookingStore";
 import { createRazorpayOrder, verifyPayment } from "../../api/payment";
-import { CalendarCheck, Car, User, Clock } from "lucide-react";
+import {
+  CalendarCheck,
+  Car,
+  User,
+  Clock,
+  MapPin,
+  Phone,
+  StickyNote,
+  PhoneCall,
+} from "lucide-react";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -14,6 +23,11 @@ interface BookingModalProps {
   startDate: Date | null;
   endDate: Date | null;
   pricePerDay: number;
+  pickupLocation?: string;
+  dropoffLocation?: string;
+  alternatePhone?: string;
+  note?: string;
+  showToast: (message: string, type: "success" | "error" | "warning") => void;
 }
 
 const BookingModal: React.FC<BookingModalProps> = ({
@@ -28,6 +42,11 @@ const BookingModal: React.FC<BookingModalProps> = ({
   startDate,
   endDate,
   pricePerDay,
+  pickupLocation,
+  dropoffLocation,
+  alternatePhone,
+  note,
+  showToast,
 }) => {
   const { createNewBooking } = useBookingStore();
   const token = localStorage.getItem("token");
@@ -58,8 +77,14 @@ const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   const handleBooking = async () => {
-    if (!token || !startDate || !endDate) {
-      alert("Please select rental dates.");
+    if (
+      !token ||
+      !startDate ||
+      !endDate ||
+      !pickupLocation ||
+      !dropoffLocation
+    ) {
+      showToast("Please fill all fields.", "warning");
       return;
     }
 
@@ -67,7 +92,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
       const order = await createRazorpayOrder(finalTotal);
 
       if (!order.id) {
-        alert("Failed to create order.");
+        showToast("Failed to create order.", "error");
         return;
       }
 
@@ -98,12 +123,16 @@ const BookingModal: React.FC<BookingModalProps> = ({
               end_date: endDate.toISOString().split("T")[0],
               total_price: finalTotal,
               status: "Confirmed",
+              pickup_location: pickupLocation,
+              dropoff_location: dropoffLocation,
+              alternate_phone: alternatePhone,
+              note: note,
             });
 
-            alert("Booking confirmed!");
+            showToast("Booking confirmed!", "success");
             onClose();
           } else {
-            alert("Payment verification failed.");
+            showToast("Payment verification failed.", "error");
           }
         },
         prefill: {
@@ -118,7 +147,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
       const razorpayInstance = new (window as any).Razorpay(options);
       razorpayInstance.open(); // opening razorpay payment modal
     } catch (error) {
-      alert("Failed to create booking.");
+      showToast("Failed to create booking.", "error");
     }
   };
 
@@ -142,24 +171,64 @@ const BookingModal: React.FC<BookingModalProps> = ({
           <p className='flex items-center gap-2'>
             <Car size={20} className='text-accent-600' />
             <span>
-              Car: <span className='font-medium'>{carName}</span>
+              <span className='font-medium'>Car: </span>
+              {carName}
             </span>
           </p>
           <p className='flex items-center gap-2'>
             <User size={20} className='text-accent-600' />
             <span>
-              User Name: <span className='font-medium'>{userName}</span>
+              <span className='font-medium'>User Name: </span> {userName}
             </span>
           </p>
           <p className='flex flex-col md:flex-row gap-1'>
             <span className='flex items-center gap-2'>
               <Clock size={20} className='text-accent-600' />
-              <span>Rental Period:</span>
+              <span className='font-medium'>Rental Period:</span>
             </span>
-            <span className='font-medium pl-7 sm:pl-0'>
+            <span className='pl-7 sm:pl-0'>
               {formatDate(startDate)} - {formatDate(endDate)}
             </span>
           </p>
+
+          {pickupLocation && (
+            <p className='flex items-center gap-2'>
+              <MapPin className='text-accent-600' size={20} />
+              <span className='font-medium'>Pickup Location: </span>
+              {pickupLocation}
+            </p>
+          )}
+
+          {dropoffLocation && (
+            <p className='flex items-center gap-2'>
+              <MapPin className='text-accent-600 rotate-180' size={20} />
+              <span className='font-medium'>Drop-off Location:</span>{" "}
+              {dropoffLocation}
+            </p>
+          )}
+
+          {userPhone && (
+            <p className='flex items-center gap-2'>
+              <Phone className='text-accent-600' size={20} />
+              <span className='font-medium'>Phone:</span> {userPhone}
+            </p>
+          )}
+
+          {alternatePhone && (
+            <p className='flex items-center gap-2'>
+              <PhoneCall className='text-accent-600' size={20} />
+              <span className='font-medium'>Alternate Phone:</span>{" "}
+              {alternatePhone}
+            </p>
+          )}
+
+          {note && (
+            <p className='flex items-start gap-2'>
+              <StickyNote className='text-accent-600 mt-1' size={20} />
+              <span className='font-medium'>Note: </span>
+              <span className='whitespace-pre-wrap'>{note}</span>
+            </p>
+          )}
 
           <hr className='border-gray-300' />
 
