@@ -1,14 +1,12 @@
 import { Pool } from "../config/db.js";
 import { Car } from "../models/car.model.js";
 
-// fetch all available cars
+// fetch all cars
 export const getAllCars = async (): Promise<Car[]> => {
-  const [cars]: any = await Pool.query(
-    "SELECT * FROM cars WHERE availability = true"
-  );
+  const [cars]: any = await Pool.query("SELECT * FROM cars");
 
   if (!cars.length) {
-    throw new Error("No available cars found");
+    throw new Error("Cars not found");
   }
 
   for (const car of cars) {

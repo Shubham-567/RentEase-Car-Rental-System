@@ -2,12 +2,22 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 interface CarHeroProps {
-  searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
+const CarHero: React.FC<CarHeroProps> = ({ setSearchQuery }) => {
   const [searchInput, setSearchInput] = useState("");
+
+  const handleSearch = () => {
+    setSearchQuery(searchInput);
+
+    searchInput.length > 0 &&
+      document
+        .getElementById("car-listings")
+        ?.scrollIntoView({ behavior: "smooth" });
+
+    setSearchInput(""); // set input to empty string
+  };
 
   return (
     <section className='relative text-text-900 text-center py-16 sm:py-24 px-6'>
@@ -44,12 +54,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
             </div>
             <button
               className='bg-primary-500 text-white px-6 py-3 rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-md w-full'
-              onClick={() => {
-                searchQuery.length > 0 &&
-                  document
-                    .getElementById("car-listings")
-                    ?.scrollIntoView({ behavior: "smooth" });
-              }}>
+              onClick={handleSearch}>
               Search
             </button>
           </div>
@@ -67,16 +72,7 @@ const CarHero: React.FC<CarHeroProps> = ({ searchQuery, setSearchQuery }) => {
             />
             <button
               className='bg-primary-500 text-white font-bold px-6 py-3 rounded-full hover:bg-primary-600 transition-all duration-300 shadow-md cursor-pointer'
-              onClick={() => {
-                setSearchQuery(searchInput);
-
-                searchInput.length > 0 &&
-                  document
-                    .getElementById("car-listings")
-                    ?.scrollIntoView({ behavior: "smooth" });
-
-                setSearchInput(""); // set input to empty string
-              }}>
+              onClick={handleSearch}>
               Search
             </button>
           </div>

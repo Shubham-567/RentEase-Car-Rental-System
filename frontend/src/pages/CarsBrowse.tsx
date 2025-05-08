@@ -40,7 +40,7 @@ const CarsBrowse = () => {
   return (
     <div className='px-6'>
       {/* Hero Section */}
-      <CarHero searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <CarHero setSearchQuery={setSearchQuery} />
       {/* Filters Section */}
       <Filters filters={filters} setFilters={setFilters} />
 

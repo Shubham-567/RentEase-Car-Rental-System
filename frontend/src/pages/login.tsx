@@ -53,7 +53,7 @@ const Login = () => {
   }, [error]);
 
   return (
-    <div className='flex items-center justify-center py-10 px-4 pt-20'>
+    <div className='flex items-center justify-center py-10 px-4 h-[90vh]'>
       <form
         onSubmit={handleSubmit}
         className='bg-background-50 border border-background-200 p-6 shadow-lg rounded-xl w-full max-w-md'>
@@ -107,13 +107,13 @@ const Login = () => {
         <div className='flex items-center gap-2 mb-4'>
           <input type='checkbox' id='remember' className='w-4 h-4' />
           <label htmlFor='remember' className='text-text-800 text-sm'>
-            Remember me
+            Remember Me
           </label>
         </div>
 
         <button
           type='submit'
-          className='bg-primary-400 text-text-950 font-medium p-3 w-full rounded-lg shadow-md hover:bg-primary-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
+          className='bg-primary-400 text-white font-semibold p-3 w-full rounded-lg shadow-md hover:bg-primary-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed'
           disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>

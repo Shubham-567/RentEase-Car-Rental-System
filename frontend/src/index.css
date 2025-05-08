@@ -19,6 +19,10 @@
     background: var(--background);
   }
 
+  button {
+    cursor: pointer;
+  }
+
   :root {
     /* Light theme */
 

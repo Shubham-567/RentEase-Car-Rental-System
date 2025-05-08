@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-// Define the type for Car Props
+// Type for Car Props
 interface CarCardProps {
   id: number;
   name: string;
@@ -39,7 +39,7 @@ const CarCard: React.FC<CarCardProps> = ({
           />
         </Link>
 
-        <span className='absolute top-4 left-4 bg-lime-500 text-white 0 px-4 py-1 text-sm font-bold rounded-full shadow-md tracking-widest'>
+        <span className='absolute top-4 left-4 bg-accent-500 text-white 0 px-4 py-1 text-sm font-bold rounded-full shadow-md tracking-widest'>
           {type}
         </span>
       </div>
