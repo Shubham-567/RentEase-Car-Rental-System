@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Car } from "../store/carsStore";
 
 const API_URL = import.meta.env.VITE_API_URL + "/cars";
@@ -9,7 +9,19 @@ export const fetchCars = async () => {
     const response = await axios.get(API_URL);
     return response.data;
   } catch (error) {
-    throw new Error("Failed to fetch cars.");
+    const err = error as AxiosError<{ message?: string }>;
+
+    if (!navigator.onLine) {
+      throw new Error("You're offline. Please check your internet connection.");
+    }
+
+    if (err.response?.status === 500) {
+      throw new Error(
+        "The database is currently unavailable. Please try again shortly."
+      );
+    }
+
+    throw new Error(err.response?.data?.message || "Failed to fetch cars.");
   }
 };
 

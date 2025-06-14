@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import CarDetailsCard from "../components/Cars/CarDetailsCard";
+import DangerAlert from "../components/DangerAlert";
 
 const CarDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +26,7 @@ const CarDetails = () => {
     }
   }, [id, loadCarById]);
 
+  // --------- Skeleton ---------
   if (loading)
     return (
       <div className='container mx-auto px-3 md:px-0 py-6 animate-pulse'>
@@ -81,7 +83,19 @@ const CarDetails = () => {
     );
 
   if (error)
-    return <div className='text-center text-red-500 mt-10'>{error}</div>;
+    return (
+      <div className='max-w-[20%] my-20 col-span-full flex flex-col mx-auto justify-center'>
+        <DangerAlert message={error} />
+
+        <button
+          onClick={() => {
+            if (id) loadCarById(Number(id));
+          }}
+          className='bg-primary-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-primary-600 transition'>
+          Retry
+        </button>
+      </div>
+    );
 
   if (!selectedCar)
     return <div className='text-center mt-10'>Car not found</div>;

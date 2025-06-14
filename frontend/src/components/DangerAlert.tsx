@@ -13,9 +13,7 @@ const DangerAlert: React.FC<DangerAlertProps> = ({ message }) => {
       role='alert'>
       <AlertCircle className='w-5 h-5 text-red-500 dark:text-red-400' />
 
-      <div className='flex-1 text-sm leading-relaxed'>
-        <strong className='font-semibold'>Error:</strong> {message}
-      </div>
+      <div className='flex-1 text-sm leading-relaxed'>{message}</div>
     </div>
   );
 };
