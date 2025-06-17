@@ -32,7 +32,7 @@ It enables users to browse available cars, book rentals in real time, and manage
 
 - React (Vite), TypeScript, Tailwind CSS
 - Node.js (Express), TypeScript
-- MySQL Database
+- MySQL Database hosted on Aiven (free tier)
 - JSON Web Tokens (JWT) for authentication
 - Razorpay for payment gateway
 - Vercel (frontend) & Render (backend) for deployment
