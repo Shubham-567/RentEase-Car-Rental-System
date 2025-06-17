@@ -35,6 +35,10 @@ const AddEditCarModal = ({
     images: car?.images || [],
   });
 
+  const [imageErrors, setImageErrors] = useState<boolean[]>(
+    car?.images?.map(() => false) || []
+  );
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -59,26 +63,32 @@ const AddEditCarModal = ({
         ...prev,
         images: [...prev.images, ""],
       }));
+      setImageErrors((prev) => [...prev, false]);
     }
   };
 
   // Update an image URL
   const handleImageChange = (index: number, value: string) => {
     const newImages = [...formData.images];
+    const newErrors = [...imageErrors];
     newImages[index] = value;
+    newErrors[index] = false;
     setFormData((prev) => ({
       ...prev,
       images: newImages,
     }));
+    setImageErrors(newErrors);
   };
 
   // Remove an image input
   const removeImageField = (index: number) => {
     const newImages = formData.images.filter((_, i) => i !== index);
+    const newErrors = imageErrors.filter((_, i) => i !== index);
     setFormData((prev) => ({
       ...prev,
       images: newImages,
     }));
+    setImageErrors(newErrors);
   };
 
   // Form submission
@@ -98,6 +108,12 @@ const AddEditCarModal = ({
 
     if (formData.year > new Date().getFullYear()) {
       setError("Year cannot be in the future.");
+      setLoading(false);
+      return;
+    }
+
+    if (imageErrors.some((err) => err)) {
+      setError("Please fix invalid image URLs before submitting.");
       setLoading(false);
       return;
     }
@@ -284,20 +300,54 @@ const AddEditCarModal = ({
               Images (Max 5)
             </label>
             {formData.images.map((image, index) => (
-              <div key={index} className='flex items-center gap-2 mb-2'>
-                <input
-                  type='text'
-                  value={image}
-                  onChange={(e) => handleImageChange(index, e.target.value)}
-                  className='input-field flex-1'
-                  placeholder='Enter image URL'
-                />
-                <button
-                  type='button'
-                  onClick={() => removeImageField(index)}
-                  className='p-2 rounded bg-red-500 text-white hover:bg-red-600 transition'>
-                  <Trash2 size={18} />
-                </button>
+              <div key={index} className='mb-4'>
+                <div className='flex items-center gap-2 mb-1'>
+                  <input
+                    type='text'
+                    value={image}
+                    onChange={(e) => handleImageChange(index, e.target.value)}
+                    className={`input-field flex-1 ${
+                      imageErrors[index] ? "border-red-500" : ""
+                    }`}
+                    placeholder='Enter image URL'
+                  />
+                  <button
+                    type='button'
+                    onClick={() => removeImageField(index)}
+                    className='p-2 rounded bg-red-500 text-white hover:bg-red-600 transition'>
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+
+                {image && (
+                  <div className='mt-2'>
+                    <img
+                      src={image}
+                      alt={`Preview ${index + 1}`}
+                      className='h-24 w-32 object-cover rounded-lg shadow-sm border border-primary-200 hover:scale-105 transition-transform duration-200 bg-secondary-50'
+                      onError={() =>
+                        setImageErrors((prev) => {
+                          const copy = [...prev];
+                          copy[index] = true;
+                          return copy;
+                        })
+                      }
+                      onLoad={() =>
+                        setImageErrors((prev) => {
+                          const copy = [...prev];
+                          copy[index] = false;
+                          return copy;
+                        })
+                      }
+                    />
+                  </div>
+                )}
+
+                {imageErrors[index] && (
+                  <p className='text-red-500 text-sm mt-1'>
+                    Invalid image URL or image failed to load.
+                  </p>
+                )}
               </div>
             ))}
             {formData.images.length < 5 && (
