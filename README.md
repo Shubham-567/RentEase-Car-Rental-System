@@ -37,7 +37,7 @@ It enables users to browse available cars, book rentals in real time, and manage
 - Razorpay for payment gateway
 - Vercel (frontend) & Render (backend) for deployment
 
-## 📸 Preview Screens
+## Preview Screens
 
 <details>
   <summary><strong>Register Page</strong></summary>
