@@ -96,6 +96,15 @@ It enables users to browse available cars, book rentals in real time, and manage
   <img src="./screenshots/dark-car-details.png" alt="Dark Mode Car Details" />
 </details>
 
+## Technologies Used
+
+- React (Vite), TypeScript, Tailwind CSS
+- Node.js (Express), TypeScript
+- MySQL Database hosted on Aiven (free tier)
+- JSON Web Tokens (JWT) for authentication
+- Razorpay for payment gateway
+- Vercel (frontend) & Render (backend) for deployment
+
 ## Features Implemented
 
 - Secure user and admin authentication using JWT
@@ -114,15 +123,6 @@ It enables users to browse available cars, book rentals in real time, and manage
 - **Real-time Updates:** Booking system reflects live car availability
 - **Modular Code:** Organized for maintainability and easy expansion
 - **Payment Integration:** Razorpay ensures safe and seamless transactions
-
-## Technologies Used
-
-- React (Vite), TypeScript, Tailwind CSS
-- Node.js (Express), TypeScript
-- MySQL Database hosted on Aiven (free tier)
-- JSON Web Tokens (JWT) for authentication
-- Razorpay for payment gateway
-- Vercel (frontend) & Render (backend) for deployment
 
 ## License
 
