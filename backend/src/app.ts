@@ -4,7 +4,7 @@ import router from "./routes/router.js";
 
 const allowedOrigins = [
   "http://localhost:5173", // local dev
-  "https://rent-ease-site.vercel.app/", // deployed frontend
+  "https://rent-ease-site.vercel.app", // deployed frontend
 ];
 
 const app = express();
