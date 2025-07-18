@@ -13,6 +13,7 @@ interface CarCardProps {
   fuel_type: string;
   transmission: string;
   seats: number;
+  availability: boolean | number;
 }
 
 const CarCard: React.FC<CarCardProps> = ({
@@ -27,6 +28,7 @@ const CarCard: React.FC<CarCardProps> = ({
   fuel_type,
   transmission,
   seats,
+  availability,
 }) => {
   return (
     <div className='bg-secondary-50 border border-gray-200 rounded-xl shadow-lg overflow-hidden transform transition-all ease-in-out duration-300 hover:scale-102 hover:shadow-2xl'>
@@ -44,7 +46,7 @@ const CarCard: React.FC<CarCardProps> = ({
         </span>
       </div>
       <div className='p-5 text-center'>
-        <h3 className='text-xl font-semibold text-gray-900'>
+        <h3 className='text-lg font-semibold text-gray-900'>
           {brand} {model} ({year})
         </h3>
         <p className='text-gray-600 mt-1 text-sm'>
@@ -55,8 +57,12 @@ const CarCard: React.FC<CarCardProps> = ({
         </p>
         <Link
           to={`/cars/${id}`}
-          className='mt-4 inline-block w-full bg-primary-500 text-white px-4 py-2 rounded-lg text-md font-medium shadow-md transition-all duration-300 hover:bg-primary-600 hover:shadow-lg'>
-          Rent Now
+          className={`t-4 inline-block w-full px-4 py-2 mt-1 rounded-lg font-medium shadow-md transition-all duration-300 hover:shadow-lg ${
+            availability
+              ? "bg-primary-500 text-white hover:bg-primary-600"
+              : "bg-gray-400 text-gray-800"
+          }`}>
+          {availability ? "Rent Now" : "Not Available"}
         </Link>
       </div>
     </div>
