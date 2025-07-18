@@ -34,8 +34,8 @@ export const createBooking = async (
   bookingData: {
     user_id: number;
     car_id: number;
-    start_date: string;
-    end_date: string;
+    start_date: Date;
+    end_date: Date;
     total_price: number;
     status: string;
   }

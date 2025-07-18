@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import router from "./routes/router.js";
+import { startAvailabilityCronJob } from "./cron/availibility.cron.js";
 
 const allowedOrigins = [
   "http://localhost:5173", // local dev
@@ -8,6 +9,8 @@ const allowedOrigins = [
 ];
 
 const app = express();
+
+startAvailabilityCronJob();
 
 app.use(
   cors({

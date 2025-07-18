@@ -11,6 +11,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -52,6 +53,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
   const { createNewBooking } = useBookingStore();
   const token = localStorage.getItem("token");
   const [isRazorpayLoading, setIsRazorpayLoading] = useState(false);
+  const navigate = useNavigate();
 
   if (!isOpen) return null;
 
@@ -127,8 +129,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
             await createNewBooking(token, {
               user_id: userId,
               car_id: carId,
-              start_date: startDate.toISOString().split("T")[0],
-              end_date: endDate.toISOString().split("T")[0],
+              start_date: startDate,
+              end_date: endDate,
               total_price: finalTotal,
               status: "Confirmed",
               pickup_location: pickupLocation,
@@ -139,6 +141,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
             showToast("Booking confirmed!", "success");
             onClose();
+
+            navigate("/profile");
           } else {
             showToast("Payment verification failed.", "error");
           }
@@ -172,6 +176,8 @@ const BookingModal: React.FC<BookingModalProps> = ({
       });
     } catch (error) {
       showToast("Failed to create booking.", "error");
+    } finally {
+      setIsRazorpayLoading(false);
     }
   };
 

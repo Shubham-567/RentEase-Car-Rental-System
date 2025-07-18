@@ -69,6 +69,12 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
     }
   };
 
+  const addDays = (date: any, days: number) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
   const closeToast = () => setToast(null);
 
   return (
@@ -128,6 +134,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
                   placeholderText='Select Start Date'
                   onKeyDown={(e) => e.preventDefault()}
                   minDate={new Date()}
+                  maxDate={addDays(new Date(), 5)}
                   dateFormat='dd/MM/yyyy'
                   className='w-full px-4 py-3 border border-gray-300 rounded-lg bg-background-50 focus:ring-2 focus:ring-primary-500 transition-all hover:scale-105 focus:outline-none shadow-sm'
                 />
@@ -145,6 +152,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
                   placeholderText='Select End Date'
                   onKeyDown={(e) => e.preventDefault()}
                   minDate={startDate || new Date()}
+                  maxDate={addDays(startDate, 10)}
                   dateFormat='dd/MM/yyyy'
                   className='w-full px-4 py-3 border border-gray-300 rounded-lg bg-background-50 focus:ring-2 focus:ring-primary-500 transition-all hover:scale-105 focus:outline-none shadow-sm'
                 />
@@ -172,7 +180,7 @@ const CarDetailsCard: React.FC<CarDetailsCardProps> = ({ car }) => {
             className={`w-full py-3 text-lg sm:text-xl font-semibold rounded-xl shadow-lg transform transition-all ${
               car.availability > 0
                 ? "bg-primary-500 text-white hover:bg-primary-600 hover:scale-102 active:scale-99"
-                : "bg-gray-400 text-gray-200 cursor-not-allowed"
+                : "bg-gray-300 text-black cursor-not-allowed border-2 border-gray-400"
             }`}
             disabled={car.availability === 0}
             onClick={handleRentNowClick}>

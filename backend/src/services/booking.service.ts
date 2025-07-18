@@ -58,6 +58,17 @@ export const createBooking = async (booking: Booking): Promise<number> => {
     note,
   } = booking;
 
+  // UTC dates to IST dates
+  const startDate = new Date(start_date);
+  startDate.setHours(startDate.getHours() + 5);
+  startDate.setMinutes(startDate.getMinutes() + 30);
+
+  const endDate = new Date(end_date);
+  endDate.setHours(endDate.getHours() + 5);
+  endDate.setMinutes(endDate.getMinutes() + 30);
+
+  // console.log("start date: ", startDate, "end date: ", endDate);
+
   const [result]: any = await Pool.query(
     `INSERT INTO bookings 
     (user_id, car_id, start_date, end_date, total_price, status, pickup_location, dropoff_location, alternate_phone, note)
@@ -65,8 +76,8 @@ export const createBooking = async (booking: Booking): Promise<number> => {
     [
       user_id,
       car_id,
-      start_date,
-      end_date,
+      startDate,
+      endDate,
       total_price,
       status ?? "Pending",
       pickup_location,
@@ -75,6 +86,11 @@ export const createBooking = async (booking: Booking): Promise<number> => {
       note ?? null,
     ]
   );
+
+  // Making the car unavailable when booking is created
+  await Pool.query("UPDATE cars SET availability = false WHERE id = ?", [
+    car_id,
+  ]);
 
   return result.insertId;
 };
